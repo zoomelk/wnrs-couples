@@ -14,6 +14,18 @@ export const appStyles = style({
   maxWidth: 1080,
   margin: "0 auto",
   height: "100%",
+
+  "@media": {
+    "screen and (max-width: 600px)": {
+      flexDirection: "column",
+      flexWrap: "nowrap",
+      alignContent: "flex-start",
+      height: "auto",
+      minHeight: "100%",
+      paddingTop: 56,
+      paddingBottom: 24,
+    },
+  },
 });
 
 export const titleStyles = style({
@@ -31,6 +43,14 @@ export const levelsStyles = style({
   alignContent: "center",
   alignItems: "center",
   width: "17rem",
+
+  "@media": {
+    "screen and (max-width: 600px)": {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      width: "100%",
+    },
+  },
 });
 
 export const levelButtonStyles = style({
@@ -57,6 +77,17 @@ export const levelButtonStyles = style({
   selectors: {
     "&:focus, &:active": {
       outline: "none",
+    },
+  },
+
+  "@media": {
+    "screen and (max-width: 600px)": {
+      margin: 6,
+      height: 60,
+      width: "28%",
+      minWidth: 96,
+      fontSize: 13,
+      padding: "0 4px",
     },
   },
 });
@@ -88,6 +119,14 @@ export const nextCardButtonStlyes = style({
     backgroundColor: primaryAccentMuted,
     color: "rgb(240, 240, 240)",
   },
+
+  "@media": {
+    "screen and (max-width: 600px)": {
+      margin: "12px auto",
+      height: 60,
+      width: "80%",
+    },
+  },
 });
 
 export const questionStyles = style({
@@ -97,4 +136,11 @@ export const questionStyles = style({
   width: "26rem",
   textTransform: "uppercase",
   alignItems: "center",
+
+  "@media": {
+    "screen and (max-width: 600px)": {
+      width: "100%",
+      maxWidth: "26rem",
+    },
+  },
 });

@@ -32,6 +32,17 @@ export const bigCardStyles = style({
   0px 30px 90px rgba(0, 0, 0, 0.07)
   `,
   padding: 50,
+
+  "@media": {
+    "screen and (max-width: 600px)": {
+      fontSize: 18,
+      height: "auto",
+      minHeight: 220,
+      margin: "1rem 0",
+      padding: 24,
+      borderRadius: 30,
+    },
+  },
 });
 
 export const smallCardStyles = style({

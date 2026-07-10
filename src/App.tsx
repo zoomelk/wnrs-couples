@@ -37,18 +37,16 @@ function shuffle<T>(array: T[]) {
 }
 
 function App() {
-  const levels = {
+  const [gameState] = React.useState(() => ({
     levelOne: shuffle(levelOne),
     levelTwo: shuffle(levelTwo),
     levelThree: shuffle(levelThree),
-  };
-
-  const [gameState] = React.useState(levels);
-  const [currLevel, setLevel] = React.useState(Object.keys(levels)[0] as keyof typeof levels);
-  const [currCard, setCurrCard] = React.useState(levels[currLevel][0]);
+  }));
+  const [currLevel, setLevel] = React.useState(Object.keys(gameState)[0] as keyof typeof gameState);
+  const [currCard, setCurrCard] = React.useState(gameState[currLevel][0]);
   const [cardHistory, setCardHistory] = React.useState<string[]>([]);
 
-  type levelKey = keyof typeof levels;
+  type levelKey = keyof typeof gameState;
 
   function handleChangeLevel(newLevel: levelKey) {
     setLevel(newLevel);
@@ -60,7 +58,7 @@ function App() {
     }
   }
 
-  const buttons = (Object.keys(levels) as levelKey[]).map((level) => (
+  const buttons = (Object.keys(gameState) as levelKey[]).map((level) => (
     <button
       className={clsx(levelButtonStyles, { [selectedLevelStyles]: level === currLevel })}
       onClick={() => handleChangeLevel(level)}
