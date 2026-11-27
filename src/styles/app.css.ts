@@ -4,25 +4,23 @@ import { primaryAccent, primaryAccentMuted } from "./globals.css";
 
 export const appStyles = style({
   textAlign: "center",
-  display: "flex",
-  flexDirection: "row",
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) 26rem minmax(0, 1fr)",
   alignContent: "center",
   alignItems: "center",
+  justifyItems: "center",
   fontWeight: 800,
-  flexWrap: "wrap",
-  justifyContent: "space-evenly",
-columnGap: 50,
-  maxWidth: 1080,
+  columnGap: 60,
+  maxWidth: 1180,
   margin: "0 auto",
-  height: "100%",
+  minHeight: "100%",
+  padding: "0 16px",
 
   "@media": {
-    "screen and (max-width: 600px)": {
+    "screen and (max-width: 800px)": {
+      display: "flex",
       flexDirection: "column",
-      flexWrap: "nowrap",
       alignContent: "flex-start",
-      height: "auto",
-      minHeight: "100%",
       paddingTop: 56,
       paddingBottom: 24,
     },
@@ -43,7 +41,9 @@ export const levelsStyles = style({
   justifyContent: "center",
   alignContent: "center",
   alignItems: "center",
-  width: "15rem",
+  width: "100%",
+maxWidth: 231,
+justifySelf: "end",
 
   "@media": {
     "screen and (max-width: 600px)": {
@@ -60,12 +60,12 @@ export const levelButtonStyles = style({
 gap: 4,
   alignItems: "center",
   justifyContent: "center",
-  margin: 15,
+  margin: "15px 0",
   borderRadius: 15,
   border: `solid 2px ${primaryAccent}`,
   backgroundColor: "#fff",
   height: 88,
-  width: 231,
+  width: "100%",
   textTransform: "uppercase",
   color: primaryAccent,
   fontSize: 18,

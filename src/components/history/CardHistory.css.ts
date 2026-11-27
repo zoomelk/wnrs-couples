@@ -9,7 +9,8 @@ export const historyStyles = style({
   maxWidth: "19rem",
   alignContent: "center",
   alignItems: "center",
-  padding: 5,
+  padding: "5px 0",
+  justifySelf: "start",
 });
 
 export const historyTitleStyles = style({
