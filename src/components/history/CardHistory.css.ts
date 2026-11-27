@@ -1,15 +1,17 @@
+
 import { style } from "@vanilla-extract/css";
 
 import { primaryAccent } from "../../styles/globals.css";
 
 export const historyStyles = style({
+  gridArea: "history",
   display: "flex",
   flexDirection: "column",
   width: "100%",
-  maxWidth: "19rem",
-  alignContent: "center",
+  maxWidth: "100%",
+  minWidth: 0,
   alignItems: "center",
-  padding: 5,
+  padding: 0,
 });
 
 export const historyTitleStyles = style({
@@ -17,31 +19,27 @@ export const historyTitleStyles = style({
   color: primaryAccent,
   fontSize: 20,
   fontWeight: "inherit",
-  marginBottom:3,
+  marginBottom: 8,
 });
 
 export const cardContainerStyles = style({
-  height: "100%",
-  minHeight: "30rem",
-  maxHeight: "30rem",
   width: "100%",
+  minWidth: 0,
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  alignContent: "center",
-  margin: 10,
+  margin: 0,
   borderRadius: 15,
   border: `solid 2px ${primaryAccent}`,
 });
 
 export const cardContainerScrollStyles = style({
-width: "98%",
-height: "auto",
-flex: 1,
-minHeight: 0,
-margin: "4px auto",
-  overflowY: "auto",
-  overflowX: "hidden",
-  padding: 12,
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "flex-start",
+  gap: 12,
+  width: "100%",
+  minHeight: 216,
+  overflowX: "auto",
+  overflowY: "hidden",
+  padding: 16,
 });

@@ -20,7 +20,7 @@ export const bigCardStyles = style({
   fontSize: 25,
   width: "100%",
   height: 300,
-  margin: "2rem",
+  margin: "0",
   backgroundColor: "white",
   color: primaryAccent,
   borderRadius: 50,
@@ -40,7 +40,7 @@ export const bigCardStyles = style({
       fontSize: 18,
       height: "auto",
       minHeight: 220,
-      margin: "1rem 0",
+      margin: "0",
       padding: 24,
       borderRadius: 30,
     },
@@ -71,10 +71,12 @@ export const bigCardStyles = style({
 
 export const smallCardStyles = style({
   fontSize: 16,
-  width: "100%",
+  width: 240,
   height: "auto",
   aspectRatio: "416 / 300",
-  margin: "0 0 12px",
+  flexShrink: 0,
+margin: 0,
+padding: 22,
   borderRadius: 28,
   backgroundColor: "#ffffff",
   color: "#c10016",
@@ -87,7 +89,7 @@ export const smallCardStyles = style({
   0px 7.9px 23.8px rgba(0, 0, 0, 0.044),
   0px 30px 90px rgba(0, 0, 0, 0.07)
   `,
-  padding: "9%",
+
   minHeight: 0,
   overflowY: "auto",
   overflowWrap: "anywhere",

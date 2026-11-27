@@ -1,30 +1,43 @@
+
 import { style } from "@vanilla-extract/css";
 
 import { primaryAccent, primaryAccentMuted } from "./globals.css";
 
 export const appStyles = style({
   textAlign: "center",
-  display: "flex",
-  flexDirection: "row",
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) minmax(0, 26rem) minmax(0, 1fr)",
+  gridTemplateAreas: `
+    "anniversary anniversary anniversary"
+    "gameTitle gameTitle gameTitle"
+    "levels question next"
+    "history history history"
+  `,
   alignContent: "center",
   alignItems: "center",
+  justifyItems: "center",
+  columnGap: "clamp(16px, 3vw, 32px)",
+  rowGap: 16,
   fontWeight: 800,
-  flexWrap: "wrap",
-  justifyContent: "space-evenly",
-columnGap: 50,
   maxWidth: 1080,
+  width: "100%",
   margin: "0 auto",
-  height: "100%",
+  minHeight: "100%",
+  padding: "56px 24px 24px",
 
   "@media": {
-    "screen and (max-width: 600px)": {
-      flexDirection: "column",
-      flexWrap: "nowrap",
-      alignContent: "flex-start",
-      height: "auto",
-      minHeight: "100%",
-      paddingTop: 56,
-      paddingBottom: 24,
+    "screen and (max-width: 800px)": {
+      gridTemplateColumns: "minmax(0, 1fr)",
+      gridTemplateAreas: `
+        "anniversary"
+        "gameTitle"
+        "levels"
+        "question"
+        "next"
+        "history"
+      `,
+      alignContent: "start",
+      padding: "56px 16px 24px",
     },
   },
 });
@@ -38,18 +51,20 @@ export const titleStyles = style({
 });
 
 export const levelsStyles = style({
+  gridArea: "levels",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignContent: "center",
   alignItems: "center",
-  width: "15rem",
+  width: "100%",
+  maxWidth: 231,
+  gap: 18,
 
   "@media": {
-    "screen and (max-width: 600px)": {
+    "screen and (max-width: 800px)": {
       flexDirection: "row",
-      flexWrap: "wrap",
-      width: "100%",
+      maxWidth: "26rem",
+      gap: 8,
     },
   },
 });
@@ -57,15 +72,15 @@ export const levelsStyles = style({
 export const levelButtonStyles = style({
   display: "flex",
   flexDirection: "column",
-gap: 4,
+  gap: 4,
   alignItems: "center",
   justifyContent: "center",
-  margin: 15,
+  margin: 0,
   borderRadius: 15,
   border: `solid 2px ${primaryAccent}`,
   backgroundColor: "#fff",
   height: 88,
-  width: 231,
+  width: "100%",
   textTransform: "uppercase",
   color: primaryAccent,
   fontSize: 18,
@@ -83,11 +98,11 @@ gap: 4,
   },
 
   "@media": {
-    "screen and (max-width: 600px)": {
-      margin: 6,
+    "screen and (max-width: 800px)": {
       height: 60,
-      width: "28%",
-      minWidth: 96,
+      width: "auto",
+      flex: "1 1 0",
+      minWidth: 0,
       fontSize: 13,
       padding: "0 4px",
     },
@@ -97,23 +112,26 @@ gap: 4,
 export const selectedLevelStyles = style({
   backgroundColor: primaryAccent,
   color: "#fff",
-  outline: "none", 
+  outline: "none",
 });
 
 export const nextCardButtonStlyes = style({
+  gridArea: "next",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  margin: 25,
+  margin: 0,
   borderRadius: 15,
   backgroundColor: ["#fff", primaryAccent],
   height: 88,
-  width: 231,
+  width: "100%",
+  maxWidth: 231,
   textTransform: "uppercase",
   color: "#fff",
   outline: "none",
   fontSize: 18,
   border: "none",
+  cursor: "pointer",
 
   ":hover": {
     backgroundColor: primaryAccentMuted,
@@ -121,8 +139,7 @@ export const nextCardButtonStlyes = style({
   },
 
   "@media": {
-    "screen and (max-width: 600px)": {
-      margin: "12px auto",
+    "screen and (max-width: 800px)": {
       height: 60,
       width: "80%",
     },
@@ -130,17 +147,13 @@ export const nextCardButtonStlyes = style({
 });
 
 export const questionStyles = style({
+  gridArea: "question",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  width: "26rem",
+  width: "100%",
+  maxWidth: "26rem",
+  minWidth: 0,
   textTransform: "uppercase",
   alignItems: "center",
-
-  "@media": {
-    "screen and (max-width: 600px)": {
-      width: "100%",
-      maxWidth: "26rem",
-    },
-  },
 });

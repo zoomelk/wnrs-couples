@@ -99,46 +99,55 @@ const buttons = (Object.keys(gameState) as levelKey[]).map((level, index) => (
   return (
     <div className={appStyles}>
       <Credits />
-      
+
       <h1 className={titleStyles} style={{
-      /*  width: "100%",
-      fontFamily: '"Montserrat", sans-serif',
-      fontSize: 48,
-      fontWeight: 800,
-      margin: "0 0 70px",
-      textTransform:"uppercase",    */
-width: "100%",
-  fontFamily: '"Sacramento", cursive',
-  fontSize: "clamp(46px, 8vw, 115px)",
-  fontWeight: 400,
-  margin: "0 0 30px",
-  textTransform: "none",
-  letterSpacing: "normal",
+        gridArea: "anniversary",
+        width: "100%",
+        fontFamily: '"Sacramento", cursive',
+        fontSize: "clamp(46px, 8vw, 115px)",
+        fontWeight: 400,
+        margin: 0,
+        lineHeight: 1.1,
+        textTransform: "none",
+        letterSpacing: "normal",
       }}>
-      Happy Anniversary Jared 
-    </h1>
+        Happy Anniversary Jared
+      </h1>
+
+      <div style={{
+        gridArea: "gameTitle",
+        textTransform: "uppercase",
+      }}>
+        <div className={titleStyles} style={{
+          fontFamily: "Montserrat",
+          margin: "0 0 5px",
+        }}>
+          ♥️ wnrs ♥️
+        </div>
+
+        <h3 className={titleStyles} style={{
+          fontFamily: '"Montserrat", sans-serif',
+          fontSize: 23,
+          fontWeight: 800,
+          margin: 0,
+        }}>
+          Couples Edition
+        </h3>
+      </div>
 
       <div className={levelsStyles}>{buttons}</div>
-      <div className={questionStyles}>
-        <div className={titleStyles}style={{
-                fontFamily: "Montserrat",
-marginBottom: 5,
-        }}>♥️ wnrs ♥️</div>
-      <h3 className={titleStyles} style={{
-              fontFamily: '"Montserrat", sans-serif',
-      width: "100%",
-      fontSize: 23,
-      fontWeight: 800,
-      margin: "0 0 10px",
-    }}>
-      Couples Edition
-    </h3>
 
+      <div className={questionStyles}>
         <Card styleName={bigCardStyles} question={currCard} />
-        <button className={nextCardButtonStlyes} onClick={() => handleNextCard()}>
-          next card
-        </button>
       </div>
+
+      <button
+        className={nextCardButtonStlyes}
+        onClick={() => handleNextCard()}
+      >
+        next card
+      </button>
+
       <CardHistory cardHistory={cardHistory} />
     </div>
   );
