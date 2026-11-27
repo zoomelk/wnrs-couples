@@ -58,15 +58,25 @@ function App() {
     }
   }
 
-  const buttons = (Object.keys(gameState) as levelKey[]).map((level) => (
-    <button
-      className={clsx(levelButtonStyles, { [selectedLevelStyles]: level === currLevel })}
-      onClick={() => handleChangeLevel(level)}
-      key={level}
-    >
-      {level.split(/(?=[A-Z])/).join(" ")}
-    </button>
-  ));
+const buttons = (Object.keys(gameState) as levelKey[]).map((level, index) => (
+  <button
+    className={clsx(levelButtonStyles, { [selectedLevelStyles]: level === currLevel })}
+    onClick={() => handleChangeLevel(level)}
+    key={level}
+  >
+    <span style={{ fontSize: 13.5, fontWeight: 500 }}>
+      Level {index + 1}
+    </span>
+
+    <span style={{ fontWeight: 800 }}>
+      {{
+        levelOne: "Perception",
+        levelTwo: "Connection",
+        levelThree: "Reflection",
+      }[level]}
+    </span>
+  </button>
+));
 
   function handleNextCard() {
     const finalMessage = "You have finished this level!";

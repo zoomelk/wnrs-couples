@@ -3,15 +3,13 @@ import { contStyles, creditStyles, creditTitleStyles } from "./Credits.css";
 const Credits = () => {
   return (
     <div className={creditStyles}>
-      <div className={creditTitleStyles}>how & who</div>
+      <div className={creditTitleStyles}>A little note for you ♥️</div>
       <div className={contStyles}>
-        <b>How to play:</b> <br />
-        Progress from level to level. Become more than strangers, one card at a time.
-        <p>Refresh to reset card decks.</p>{" "}
+        
+        I have a little gift for you that's still in the mail. So rather than wait, I thought I'd make us our own special digital version.
+        <p> Now we can play virtually anywhere, anytime. 😘</p>
         <p>
-          Made by <a href="https://github.com/munjoonteo">@munjoonteo</a> and{" "}
-          <a href="https://github.com/ilyues">@ilyues</a>.
-        </p>
+          Love you</p>
       </div>
     </div>
   );

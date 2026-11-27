@@ -8,9 +8,9 @@ export const creditStyles = style({
   backgroundColor: "#fff",
   height: "auto",
   textAlign: "left",
-  maxHeight: 13,
-  width: 175,
-  padding: 4,
+  maxHeight: 17,
+  width: 290,
+  padding: 0,
   top: 30,
   left: 40,
   paddingLeft: 10,
@@ -34,5 +34,6 @@ export const creditTitleStyles = style({
 
 export const contStyles = style({
   paddingTop: 10,
-  borderTop: "1px solid #eee",
+    paddingBottom: 0,
+//  borderTop: "1px solid #eee",
 });

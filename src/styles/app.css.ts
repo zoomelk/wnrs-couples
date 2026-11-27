@@ -56,6 +56,8 @@ export const levelsStyles = style({
 
 export const levelButtonStyles = style({
   display: "flex",
+  flexDirection: "column",
+gap: 4,
   alignItems: "center",
   justifyContent: "center",
   margin: 15,
@@ -95,7 +97,7 @@ export const levelButtonStyles = style({
 export const selectedLevelStyles = style({
   backgroundColor: primaryAccent,
   color: "#fff",
-  outline: "none",
+  outline: "none", 
 });
 
 export const nextCardButtonStlyes = style({
