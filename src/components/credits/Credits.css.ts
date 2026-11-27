@@ -5,6 +5,7 @@ import { primaryAccent } from "../../styles/globals.css";
 export const creditStyles = style({
   fontSize: 12,
   fontWeight: 400,
+  letterSpacing: "0.2px",
   backgroundColor: "#fff",
   height: "auto",
   textAlign: "left",
@@ -30,6 +31,7 @@ export const creditStyles = style({
 export const creditTitleStyles = style({
   textTransform: "uppercase",
   fontWeight: 700,
+  letterSpacing: "0.5px",
 });
 
 export const contStyles = style({

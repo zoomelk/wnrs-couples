@@ -1,4 +1,5 @@
-import { style } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
+import { creditStyles } from "../components/credits/Credits.css";
 
 import { primaryAccent, primaryAccentMuted } from "./globals.css";
 
@@ -141,6 +142,14 @@ export const questionStyles = style({
     "screen and (max-width: 600px)": {
       width: "100%",
       maxWidth: "26rem",
+    },
+  },
+});
+
+globalStyle(`.${appStyles} > :not(h1):not(.${creditStyles})`, {
+  "@media": {
+    "screen and (min-width: 801px)": {
+      transform: "translateX(-15px)",
     },
   },
 });

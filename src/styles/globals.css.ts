@@ -14,7 +14,7 @@ globalStyle("html, body, #root", {
 globalStyle("body", {
   fontFamily: '"Proxima Nova", sans-serif',
   fontWeight: 800,
-  letterSpacing: "0.5px",
+  letterSpacing: "1px",
   vars: {
     [primaryAccent]: "#c10016",
     [primaryAccentMuted]: "#ad0014",

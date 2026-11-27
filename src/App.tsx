@@ -107,12 +107,13 @@ const buttons = (Object.keys(gameState) as levelKey[]).map((level, index) => (
       fontWeight: 800,
       margin: "0 0 70px",
       textTransform:"uppercase",    */
-width: "100%",
-gridColumn: "1 / -1",
+
+      width: "100%",
+  gridColumn: "1 / -1",
   fontFamily: '"Sacramento", cursive',
-  fontSize: "clamp(46px, 8vw, 115px)",
+  fontSize: "clamp(46px, 7.5vw, 115px)",
   fontWeight: 400,
-  margin: "0 0 30px",
+  margin: "0 0 10px",
   textTransform: "none",
   letterSpacing: "normal",
       }}>
@@ -129,6 +130,7 @@ marginBottom: 5,
               fontFamily: '"Montserrat", sans-serif',
       width: "100%",
       fontSize: 23,
+      letterSpacing: "0.5px",
       fontWeight: 800,
       margin: "0 0 10px",
     }}>
