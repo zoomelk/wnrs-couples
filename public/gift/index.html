@@ -9,7 +9,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
+<link rel="preload"
+      href="../fonts/sacramento-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin>
 <style>
+  @font-face {
+  font-family: "Sacramento";
+  src: url("../fonts/sacramento-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
 @font-face {
   font-family: "Proxima Nova";
   src: local("Proxima Nova Extrabold"), local("Proxima Nova Extra Bold"),
