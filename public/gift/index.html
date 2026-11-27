@@ -1,0 +1,367 @@
+<!doctype html>
+<!-- Jared Gift — Version 11 | reveal spacing, heading and game-style button -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Happy Anniversary Jared ♡</title>
+<meta name="gift-version" content="11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: "Proxima Nova";
+  src: local("Proxima Nova Extrabold"), local("Proxima Nova Extra Bold"),
+       url("fonts/proxima-nova-extra-bold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* DESIGN CONTROLS — edit these values to customise the gift. */
+  --accent-red: #c10016; /* rgb(193, 0, 22) */
+  --reveal-bg: #ffffff;
+  --reveal-ink: var(--accent-red);
+  --tag-bg: #fffaf2;
+  --tag-ink: var(--accent-red);
+  --corner-brand-color: #f7f1e6;
+  --button-bg: var(--accent-red);
+  --button-ink: #ffffff;
+  --button-hover-bg: #a50013; /* Provisional muted red; replace with the game's primaryAccentMuted value. */
+  --button-hover-ink: rgb(240, 240, 240);
+
+  /* REVEAL PAGE TYPOGRAPHY & SPACING */
+  --reveal-heading-size: clamp(46px, 8vw, 115px);
+  --reveal-message-size: clamp(15px, 1.65vw, 21px);
+  --reveal-message-weight: 500;
+  --reveal-message-width: 680px;
+  --reveal-heading-line-height: 1.1;
+  --reveal-heading-gap: clamp(24px, 5vmin, 50px);
+  --reveal-paragraph-gap: .65em;
+  --reveal-button-gap: var(--reveal-heading-gap);
+
+  /* REVEAL BUTTON */
+  --button-radius: 15px;
+  --button-padding: 28px;
+  --button-font-size: 15px;
+
+  /* Sticker position: gap from the visible screen edges (after rotation). */
+  --tag-right: 2%;
+  --tag-bottom: 2%;
+  --tag-scale: 29%;   /* Overall size: height, text, and base width. */
+  --tag-width: 90%;  /* Width only, relative to the scaled base width. */
+  --tag-angle: -25deg;
+  --tag-max-size: 373px; /* Maximum unrotated base scale, before width adjustment. */
+
+  /* ANIMATION SPEED — 1 = original, 0.8 = 20% slower, 1.2 = 20% faster. */
+  --ribbon-playback-speed: .7;
+  --paper-playback-speed: .5;
+
+  /* Portrait sizing only; the same bottom-right anchor applies. */
+  --tag-portrait-scale: min(73vw, 420px);
+
+  /* Automatic darker edge for the paper gradient. */
+  --tag-shade: color-mix(in srgb, var(--tag-bg), #bda57f 12%);
+}
+* { box-sizing: border-box; }
+/* Base scale determines typography and height; width controls the paper only. */
+.tag-anchor {
+  position: absolute;
+  z-index: 3;
+  right: max(var(--tag-right), env(safe-area-inset-right, 0px));
+  bottom: max(var(--tag-bottom), env(safe-area-inset-bottom, 0px));
+  width: min(var(--tag-scale), var(--tag-max-size));
+  aspect-ratio: 420 / 248;
+  container-type: inline-size;
+  pointer-events: none;
+}
+.gift-tag {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--tag-width);
+  height: 100%;
+  /* Offset the rotated bounding box so the visible corners respect the gaps.
+     The intermediate 90-degree rotations exchange width/height contributions. */
+  --abs-sin: max(sin(var(--tag-angle)), calc(-1 * sin(var(--tag-angle))));
+  --abs-cos: max(cos(var(--tag-angle)), calc(-1 * cos(var(--tag-angle))));
+  --tag-edge-transform: translate(calc((1 - var(--abs-cos)) * 50%), calc((1 - var(--abs-cos)) * 50%)) rotate(90deg) translate(calc(-50% * var(--abs-sin)), calc(50% * var(--abs-sin))) rotate(-90deg) rotate(var(--tag-angle));
+  transform: var(--tag-edge-transform);
+  filter: drop-shadow(3px 8px 6px color-mix(in srgb, var(--accent-red) 18%, #00000026));
+  color: var(--tag-ink);
+}
+.tag-paper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4.047619cqw; /* Match the original 17-unit corner radius. */
+  overflow: hidden;
+}
+.tag-copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  scale: 1.05;
+}
+.recipient {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 5cqw;
+  font-weight: 600;
+  letter-spacing: .19em;
+  line-height: 1.2;
+  margin: 0 0 4cqw;
+  padding-left: .19em;
+}
+.rule { display: block; width: 15cqw; height: 1px; background: currentColor; opacity: .8; margin-bottom: 3cqw; }
+.invitation {
+  font-family: 'Sacramento', 'Snell Roundhand', cursive;
+  font-weight: 400;
+  font-size: 13.6cqw;
+  line-height: 1;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.7cqw;
+  margin: 0 0 3.3cqw;
+}
+.heart { width: 7cqw; height: 8cqw; flex: none; transform: rotate(-7deg); margin-top: -1cqw; }
+.instruction {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 3.2cqw;
+  font-weight: 600;
+  letter-spacing: .44em;
+  line-height: 1.3;
+  margin: 1.2em 0 0;
+  padding-left: .14em;
+}
+
+/* Cover geometry: all artwork shares one 4:3 coordinate system. */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: var(--reveal-bg); color: var(--reveal-ink); }
+#gift { position: relative; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; isolation: isolate; }
+#artwork { position: absolute; z-index: 2; left: 50%; top: 50%; width: max(100vw, 133.333333vh); width: max(100vw, 133.333333dvh); aspect-ratio: 4/3; transform: translate(-50%,-50%); pointer-events: none; }
+.frame { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; user-select: none; }
+#paper { z-index: 1; }
+#ribbon { z-index: 2; }
+.gift-tag { transition: opacity 160ms ease, transform 160ms ease; }
+.gift-tag.leaving { opacity: 0; transform: var(--tag-edge-transform) scale(.96); }
+/* A LITTLE GIFT FOR YOU — TOP LEFT */
+.corner-brand {
+  position: absolute;
+  z-index: 3;
+  top: clamp(22px, 5vh, 50px);
+  left: clamp(25px, 4vw, 58px);
+  right: auto;
+  text-align: left;
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  font-size: clamp(10px, 1.15vw, 13px);
+  font-weight: 800;
+  letter-spacing: .26em;
+  color: var(--corner-brand-color);
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+/* OUTLINED HEART */
+.corner-heart {
+  width: 1.05em;
+  height: 1.05em;
+  display: inline-block;
+  vertical-align: -.13em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.corner-brand.leaving { opacity: 0; }
+#unwrap { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+#unwrap:focus-visible { outline: 3px solid white; outline-offset: -7px; }
+#unwrap[hidden], .frame[hidden], .gift-tag[hidden], .corner-brand[hidden], #status[hidden] { display: none; }
+#status { position: absolute; z-index: 5; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: white; background: color-mix(in srgb, var(--accent-red) 75%, transparent); border-radius: 6px; padding: 9px 15px; font: 500 12px/1.4 Montserrat, Arial, sans-serif; text-align: center; pointer-events: none; }
+/* Anniversary landing page — edit freely without affecting the animations. */
+#reveal { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; background: var(--reveal-bg); }
+.reveal-copy { width: min(90%, 850px); }
+.reveal-copy h1 { font: 400 var(--reveal-heading-size)/var(--reveal-heading-line-height) Sacramento, 'Snell Roundhand', cursive; margin: 0 0 var(--reveal-heading-gap); }
+.reveal-copy h1 span { display: block; }
+.reveal-message { width: min(100%, var(--reveal-message-width)); margin: 0 auto var(--reveal-button-gap); font: var(--reveal-message-weight) var(--reveal-message-size)/1.55 Montserrat, Arial, sans-serif; }
+.reveal-message p { margin: 0; }
+.reveal-message p + p { margin-top: var(--reveal-paragraph-gap); }
+.reveal-heart { display: inline-block; width: .78em; height: .88em; vertical-align: -.13em; transform: rotate(-7deg); }
+/* Keep the reveal usable on short landscape and narrow screens. */
+#reveal { overflow-y: auto; }
+@media (max-height: 500px) { #reveal { place-items: safe center; } .reveal-copy { --reveal-heading-size: clamp(36px, 7vw, 66px); --reveal-heading-gap: 24px; --reveal-button-gap: var(--reveal-heading-gap); } }
+.play { display: inline-block; border-radius: var(--button-radius); padding: var(--button-padding); color: var(--button-ink); background: var(--button-bg); text-decoration: none; font: 800 var(--button-font-size)/1.2 "Proxima Nova", Montserrat, Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
+.play:hover { background: var(--button-hover-bg); color: var(--button-hover-ink); }
+.play:focus-visible { outline: 3px solid var(--button-bg); outline-offset: 5px; }
+@media (max-aspect-ratio: 1/1) { .tag-anchor { width: min(var(--tag-portrait-scale), var(--tag-max-size)); } }
+@media (prefers-reduced-motion: reduce) { .gift-tag, .corner-brand { transition: none; } }
+</style>
+</head>
+<body>
+<main id="gift">
+  <section id="reveal" inert aria-hidden="true">
+    <div class="reveal-copy">
+      <h1>Happy Anniversary<span>Jared <svg class="reveal-heart" viewBox="0 0 32 36" fill="none" aria-hidden="true"><path d="M15.5 31 C12 23 1 13 4.5 7 C8 1 15 6 16 12 C19 4 28 1 29 9 C30.2 17 21 26 15.5 31 Z" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h1>
+      <div class="reveal-message">
+        <p>A year later, and we're not really strangers anymore…</p>
+        <p>But there's always more to learn.</p>
+      </div>
+      <a class="play" href="../">Ready for round two?</a>
+    </div>
+  </section>
+  <div id="artwork" aria-hidden="true">
+    <img class="frame" id="paper" src="assets/paper-01.webp" alt="">
+    <img class="frame" id="ribbon" src="assets/ribbon-01.webp" alt="">
+  </div>
+  <span class="corner-brand" aria-hidden="true">
+    A LITTLE GIFT FOR YOU
+    <svg class="corner-heart" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+      <path d="M12 21 C10 19.1 3 14.5 2.5 9.4 C2.2 6.1 4.2 3.6 7.1 3.6 C9.4 3.6 11 5.1 12 6.6 C13 5.1 14.6 3.6 16.9 3.6 C19.8 3.6 21.8 6.1 21.5 9.4 C21 14.5 14 19.1 12 21 Z"/>
+    </svg>
+  </span>
+  <div class="tag-anchor" aria-hidden="true">
+<div class="gift-tag" aria-hidden="true">
+  <svg class="tag-paper" viewBox="0 0 420 248" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="grain" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".78" numOctaves="3" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+      <linearGradient id="paper-light" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fffaf2" style="stop-color: var(--tag-bg)"/><stop offset="1" stop-color="#f7efdf" style="stop-color: var(--tag-shade)"/>
+      </linearGradient>
+    </defs>
+    <g>
+      <rect width="420" height="248" fill="url(#paper-light)"/>
+      <rect width="420" height="248" filter="url(#grain)" opacity=".075" style="mix-blend-mode:multiply"/>
+    </g>
+  </svg>
+  <div class="tag-copy">
+    <p class="recipient">FOR JARED</p>
+    <span class="rule" aria-hidden="true"></span>
+    <p class="invitation">Open me <svg class="heart" viewBox="0 0 32 36" fill="none" aria-hidden="true"><path d="M15.5 31 C12 23 1 13 4.5 7 C8 1 15 6 16 12 C19 4 28 1 29 9 C30.2 17 21 26 15.5 31 Z" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+    <p class="instruction">TAP TO UNWRAP</p>
+  </div>
+</div>
+  </div>
+  <button id="unwrap" type="button" aria-label="Open your gift, Jared. Tap to unwrap."></button>
+  <div id="status" role="status" hidden></div>
+</main>
+
+<script>
+(() => {
+  // ANIMATION SPEED CONTROLS — edit these independently.
+  // 1 = original speed; 0.8 = 20% slower; 1.2 = 20% faster.
+  // Use positive numbers. Every frame duration is divided by its speed.
+  const readPlaybackSpeed = name => {
+    const value = Number(getComputedStyle(document.documentElement).getPropertyValue(name).trim());
+    return Number.isFinite(value) && value > 0 ? value : 1;
+  };
+
+  // Frames extracted from the supplied animated WebPs, retaining their original timings.
+  // Skip ribbon frame 13 (plain red): paper frame 1 already supplies that visual.
+  const ribbonTimes = [100,100,100,100,100,100,70,70,70,70,70,70];
+  // Nine original paper frames, plus one fully transparent final frame.
+  const paperTimes = Array(10).fill(100);
+  const clearPaperFrame = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
+  const path = (name, i) => `assets/${name}-${String(i+1).padStart(2,'0')}.webp`;
+  const artwork = document.querySelector('#artwork');
+  const ribbon = document.querySelector('#ribbon');
+  const paper = document.querySelector('#paper');
+  const tag = document.querySelector('.gift-tag');
+  const cornerBrand = document.querySelector('.corner-brand');
+  const tagAnchor = document.querySelector('.tag-anchor');
+  const trigger = document.querySelector('#unwrap');
+  const reveal = document.querySelector('#reveal');
+  const status = document.querySelector('#status');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let started = false;
+  // A restored history entry can retain the unwrapped DOM. Reload to restore
+  // the original sticker, CSS container and frame elements before replay.
+  window.addEventListener('pageshow', event => {
+    if (event.persisted && started) window.location.reload();
+  });
+  const delay = ms => new Promise(resolve => setTimeout(resolve,ms));
+  const painted = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  function load(name, durations) {
+    return durations.map((_,i) => {
+      const img = new Image();
+      img.className = 'frame';
+      img.alt = '';
+      img.src = name === 'paper' && i === 9 ? clearPaperFrame : path(name,i);
+      return img;
+    });
+  }
+  const ribbons = load('ribbon', ribbonTimes);
+  const papers = load('paper', paperTimes);
+  // Preload and decode before playing, so no animation can start early or loop.
+  const decode = img => img.decode ? img.decode() : new Promise((resolve,reject) => {
+    if (img.complete) return img.naturalWidth ? resolve() : reject(new Error('Image missing'));
+    img.addEventListener('load',resolve,{once:true}); img.addEventListener('error',reject,{once:true});
+  });
+  const ready = Promise.all([...ribbons,...papers].map(decode)).then(() => true, () => false);
+  let prepared = false;
+  ready.then(ok => { prepared = ok; });
+  async function playFrames(current, images, durations, speed) {
+    const rate = Number.isFinite(speed) && speed > 0 ? speed : 1;
+    let elapsed = 0;
+    let begin;
+    for (let i=0; i<images.length; i++) {
+      const next = images[i];
+      // Swap in the preloaded element itself instead of assigning an animated image URL.
+      next.id = current.id;
+      next.hidden = false;
+      current.replaceWith(next);
+      current = next;
+      images[i] = null;
+      if (i===0) { await painted(); begin = performance.now(); }
+      elapsed += durations[i] / rate;
+      // Keep every frame visible, even if a slow device needs a little extra time.
+      await delay(Math.max(25, begin + elapsed - performance.now()));
+    }
+    return current;
+  }
+  function finish() {
+    artwork.remove(); tagAnchor.remove(); cornerBrand.remove(); trigger.remove(); status.hidden = true;
+    reveal.inert = false; reveal.removeAttribute('aria-hidden');
+    document.querySelector('.play').focus({preventScroll:true});
+  }
+  trigger.addEventListener('click', async () => {
+    if (started) return;
+    started = true; trigger.setAttribute('aria-disabled','true');
+    const RIBBON_PLAYBACK_SPEED = readPlaybackSpeed('--ribbon-playback-speed');
+    const PAPER_PLAYBACK_SPEED = readPlaybackSpeed('--paper-playback-speed');
+    if (!prepared) { status.textContent = 'Preparing your gift…'; status.hidden = false; }
+    const ok = await ready; status.hidden = true;
+    if (!ok) {
+      status.textContent = 'Some gift images could not load. Please refresh to try again.';
+      status.hidden = false; started = false; trigger.removeAttribute('aria-disabled'); return;
+    }
+    tag.classList.add('leaving');
+    cornerBrand.classList.add('leaving');
+    if (reduceMotion) {
+      finish(); return;
+    }
+    // Fade the tag and corner message together, then untie. The ribbon and paper never animate simultaneously.
+    await delay(160); tag.hidden = true; cornerBrand.hidden = true;
+    const lastRibbon = await playFrames(ribbon, ribbons, ribbonTimes, RIBBON_PLAYBACK_SPEED);
+    // Paper's first frame was already beneath the ribbon; swap to its sequence now.
+    lastRibbon.hidden = true;
+    await playFrames(paper, papers, paperTimes, PAPER_PLAYBACK_SPEED);
+    // The tenth paper frame is fully clear. Remove the artwork after its hold.
+    finish();
+  });
+})();
+</script>
+
+</body>
+</html>
