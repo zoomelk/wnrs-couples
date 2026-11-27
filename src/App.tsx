@@ -101,12 +101,19 @@ const buttons = (Object.keys(gameState) as levelKey[]).map((level, index) => (
       <Credits />
       
       <h1 className={titleStyles} style={{
-      width: "100%",
+      /*  width: "100%",
       fontFamily: '"Montserrat", sans-serif',
       fontSize: 48,
       fontWeight: 800,
       margin: "0 0 70px",
-      textTransform:"uppercase",    
+      textTransform:"uppercase",    */
+width: "100%",
+  fontFamily: '"Sacramento", cursive',
+  fontSize: 64,
+  fontWeight: 400,
+  margin: "0 0 70px",
+  textTransform: "none",
+  letterSpacing: "normal",
       }}>
       Happy Anniversary Jared 
     </h1>
