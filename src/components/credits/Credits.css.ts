@@ -32,10 +32,33 @@ export const creditTitleStyles = style({
   textTransform: "uppercase",
   fontWeight: 700,
   letterSpacing: "0.5px",
+    lineHeight: "17px",
 });
 
 export const contStyles = style({
   paddingTop: 10,
     paddingBottom: 0,
 //  borderTop: "1px solid #eee",
+});
+
+export const replayStyles = style({
+  fontSize: 12,
+  height: 17,
+  backgroundColor: "#fff",
+  position: "fixed",
+  top: 30,
+  right: 40,
+  paddingRight: 10,
+  borderRight: `1px solid ${primaryAccent}`,
+  zIndex: 10,
+  color: "#000",
+  textDecoration: "none",
+  display: "flex",
+  alignItems: "center",
+  gap: 5,
+  cursor: "pointer",
+
+  ":hover": {
+    color: primaryAccent,
+  },
 });

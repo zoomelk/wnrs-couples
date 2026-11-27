@@ -15,7 +15,7 @@ export const appStyles = style({
   maxWidth: 1180,
   margin: "0 auto",
   minHeight: "100%",
-  padding: "0 16px",
+padding: "56px 16px",
 
   "@media": {
     "screen and (max-width: 800px)": {
@@ -146,7 +146,7 @@ export const questionStyles = style({
   },
 });
 
-globalStyle(`.${appStyles} > :not(h1):not(.${creditStyles})`, {
+globalStyle(`.${appStyles} > :not(h1):not(a):not(.${creditStyles})`, {
   "@media": {
     "screen and (min-width: 801px)": {
       transform: "translateX(-15px)",
