@@ -33,6 +33,10 @@ export const creditTitleStyles = style({
   fontWeight: 700,
   letterSpacing: "0.5px",
     lineHeight: "17px",
+
+      ":hover": {
+    color: primaryAccent,
+  },
 });
 
 export const contStyles = style({
@@ -60,5 +64,30 @@ export const replayStyles = style({
 
   ":hover": {
     color: primaryAccent,
+  },
+});
+
+export const noteButtonStyles = style({
+  display: "block",
+  background: "none",
+  border: "none",
+  padding: 0,
+  fontSize: "inherit",
+  textAlign: "left",
+  color: "#000",
+  cursor: "pointer",
+
+  selectors: {
+    '&[data-highlighted="true"]': {
+      color: primaryAccent,
+    },
+  },
+
+  "@media": {
+    "(hover: hover)": {
+      ":hover": {
+        color: primaryAccent,
+      },
+    },
   },
 });
