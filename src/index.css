@@ -15,3 +15,47 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/wnrs-couples/fonts/montserrat-v14-latin-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* PROXIMA NOVA — MEDIUM */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* PROXIMA NOVA — SEMIBOLD */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* PROXIMA NOVA — BOLD */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* PROXIMA NOVA — EXTRABOLD */
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("/fonts/ProximaNova-Extrabold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}

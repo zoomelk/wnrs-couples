@@ -92,7 +92,7 @@ function App() {
       
       <h1 className={titleStyles} style={{
       width: "100%",
-      fontFamily: "Montserrat",
+      fontFamily: '"Montserrat", sans-serif',
       fontSize: 48,
       fontWeight: 800,
       margin: "0 0 70px",
@@ -108,7 +108,7 @@ function App() {
 marginBottom: 5,
         }}>♥️ wnrs ♥️</div>
       <h3 className={titleStyles} style={{
-              fontFamily: "Montserrat",
+              fontFamily: '"Montserrat", sans-serif',
       width: "100%",
       fontSize: 23,
       fontWeight: 800,
