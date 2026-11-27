@@ -1,14 +1,14 @@
 <!doctype html>
-<!-- Jared Gift — Version 11 | reveal spacing, heading and game-style button -->
+<!-- Jared Gift — Version 14 | clearer replay icon and larger replay link -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Happy Anniversary Jared ♡</title>
-<meta name="gift-version" content="11">
+<meta name="gift-version" content="14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&family=Sacramento&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: "Proxima Nova";
@@ -27,6 +27,7 @@
   --tag-bg: #fffaf2;
   --tag-ink: var(--accent-red);
   --corner-brand-color: #f7f1e6;
+  --corner-brand-weight: 700;
   --button-bg: var(--accent-red);
   --button-ink: #ffffff;
   --button-hover-bg: #a50013; /* Provisional muted red; replace with the game's primaryAccentMuted value. */
@@ -46,6 +47,12 @@
   --button-radius: 15px;
   --button-padding: 28px;
   --button-font-size: 15px;
+
+  /* REPLAY LINK */
+  --replay-color: var(--reveal-ink);
+  --replay-font-size: 15px;
+  --replay-icon-size: 1.2em;
+  --replay-gap: 20px;
 
   /* Sticker position: gap from the visible screen edges (after rotation). */
   --tag-right: 2%;
@@ -164,7 +171,7 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
   text-align: left;
   font-family: Montserrat, Arial, Helvetica, sans-serif;
   font-size: clamp(10px, 1.15vw, 13px);
-  font-weight: 800;
+  font-weight: var(--corner-brand-weight);
   letter-spacing: .26em;
   color: var(--corner-brand-color);
   pointer-events: none;
@@ -202,6 +209,24 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
 .play { display: inline-block; border-radius: var(--button-radius); padding: var(--button-padding); color: var(--button-ink); background: var(--button-bg); text-decoration: none; font: 800 var(--button-font-size)/1.2 "Proxima Nova", Montserrat, Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
 .play:hover { background: var(--button-hover-bg); color: var(--button-hover-ink); }
 .play:focus-visible { outline: 3px solid var(--button-bg); outline-offset: 5px; }
+/* REPLAY THE GIFT — secondary text control */
+.replay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45em;
+  margin: var(--replay-gap) auto 0;
+  padding: 5px 0;
+  border: 0;
+  background: none;
+  color: var(--replay-color);
+  font: 500 var(--replay-font-size)/1.4 Montserrat, Arial, sans-serif;
+  cursor: pointer;
+}
+.replay span { text-decoration: underline; text-underline-offset: .2em; }
+.replay svg { width: var(--replay-icon-size); height: var(--replay-icon-size); flex: none; }
+.replay:hover { color: var(--button-hover-bg); }
+.replay:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 @media (max-aspect-ratio: 1/1) { .tag-anchor { width: min(var(--tag-portrait-scale), var(--tag-max-size)); } }
 @media (prefers-reduced-motion: reduce) { .gift-tag, .corner-brand { transition: none; } }
 </style>
@@ -215,7 +240,11 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
         <p>A year later, and we're not really strangers anymore…</p>
         <p>But there's always more to learn.</p>
       </div>
-      <a class="play" href="../">Ready for round two?</a>
+      <a class="play" href="game.html">Ready for round two?</a>
+      <button class="replay" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.2 19 A8.5 8.5 0 1 0 6.2 6 L3.5 9.5"/><path d="M3.5 3 V9.5 H10"/></svg>
+        <span>Replay the gift</span>
+      </button>
     </div>
   </section>
   <div id="artwork" aria-hidden="true">
@@ -283,6 +312,7 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
   const trigger = document.querySelector('#unwrap');
   const reveal = document.querySelector('#reveal');
   const status = document.querySelector('#status');
+  document.querySelector('.replay').addEventListener('click', () => window.location.reload());
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let started = false;
   // A restored history entry can retain the unwrapped DOM. Reload to restore
