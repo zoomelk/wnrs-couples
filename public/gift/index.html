@@ -1,27 +1,15 @@
 <!doctype html>
-<!-- Jared Gift — Version 14 | clearer replay icon and larger replay link -->
+<!-- Jared Gift — Version 17 | short overlapping sticker and corner fade -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Happy Anniversary Jared ♡</title>
-<meta name="gift-version" content="14">
+<meta name="gift-version" content="17">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
-<link rel="preload"
-      href="../fonts/sacramento-latin-400-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin>
 <style>
-  @font-face {
-  font-family: "Sacramento";
-  src: url("../fonts/sacramento-latin-400-normal.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
 @font-face {
   font-family: "Proxima Nova";
   src: local("Proxima Nova Extrabold"), local("Proxima Nova Extra Bold"),
@@ -77,6 +65,7 @@
   /* ANIMATION SPEED — 1 = original, 0.8 = 20% slower, 1.2 = 20% faster. */
   --ribbon-playback-speed: .7;
   --paper-playback-speed: .5;
+  --gift-fade-duration: 100ms; /* Fade concurrently with the first ribbon frame. */
 
   /* Portrait sizing only; the same bottom-right anchor applies. */
   --tag-portrait-scale: min(73vw, 420px);
@@ -171,8 +160,14 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
 .frame { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; user-select: none; }
 #paper { z-index: 1; }
 #ribbon { z-index: 2; }
-.gift-tag { transition: opacity 160ms ease, transform 160ms ease; }
-.gift-tag.leaving { opacity: 0; transform: var(--tag-edge-transform) scale(.96); }
+/* Fade only on exit, so replay restores both elements instantly. */
+.gift-tag.leaving, .corner-brand.leaving {
+  opacity: 0;
+  transition: opacity var(--gift-fade-duration) linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gift-tag.leaving, .corner-brand.leaving { transition: none; }
+}
 /* A LITTLE GIFT FOR YOU — TOP LEFT */
 .corner-brand {
   position: absolute;
@@ -187,7 +182,6 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
   letter-spacing: .26em;
   color: var(--corner-brand-color);
   pointer-events: none;
-  transition: opacity 160ms ease;
 }
 /* OUTLINED HEART */
 .corner-heart {
@@ -201,10 +195,9 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.corner-brand.leaving { opacity: 0; }
 #unwrap { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 #unwrap:focus-visible { outline: 3px solid white; outline-offset: -7px; }
-#unwrap[hidden], .frame[hidden], .gift-tag[hidden], .corner-brand[hidden], #status[hidden] { display: none; }
+#artwork[hidden], .tag-anchor[hidden], #unwrap[hidden], .frame[hidden], .gift-tag[hidden], .corner-brand[hidden], #status[hidden] { display: none; }
 #status { position: absolute; z-index: 5; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: white; background: color-mix(in srgb, var(--accent-red) 75%, transparent); border-radius: 6px; padding: 9px 15px; font: 500 12px/1.4 Montserrat, Arial, sans-serif; text-align: center; pointer-events: none; }
 /* Anniversary landing page — edit freely without affecting the animations. */
 #reveal { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; background: var(--reveal-bg); }
@@ -240,7 +233,6 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
 .replay:hover { color: var(--button-hover-bg); }
 .replay:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 @media (max-aspect-ratio: 1/1) { .tag-anchor { width: min(var(--tag-portrait-scale), var(--tag-max-size)); } }
-@media (prefers-reduced-motion: reduce) { .gift-tag, .corner-brand { transition: none; } }
 </style>
 </head>
 <body>
@@ -252,7 +244,7 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
         <p>A year later, and we're not really strangers anymore…</p>
         <p>But there's always more to learn.</p>
       </div>
-      <a class="play" href="game.html">Ready for round two?</a>
+      <a class="play" href="../">Ready for round two?</a>
       <button class="replay" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.2 19 A8.5 8.5 0 1 0 6.2 6 L3.5 9.5"/><path d="M3.5 3 V9.5 H10"/></svg>
         <span>Replay the gift</span>
@@ -316,26 +308,24 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
   const clearPaperFrame = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
   const path = (name, i) => `assets/${name}-${String(i+1).padStart(2,'0')}.webp`;
   const artwork = document.querySelector('#artwork');
-  const ribbon = document.querySelector('#ribbon');
-  const paper = document.querySelector('#paper');
+  let ribbon = document.querySelector('#ribbon');
+  let paper = document.querySelector('#paper');
   const tag = document.querySelector('.gift-tag');
   const cornerBrand = document.querySelector('.corner-brand');
   const tagAnchor = document.querySelector('.tag-anchor');
   const trigger = document.querySelector('#unwrap');
   const reveal = document.querySelector('#reveal');
   const status = document.querySelector('#status');
-  document.querySelector('.replay').addEventListener('click', () => window.location.reload());
+  const replay = document.querySelector('.replay');
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let started = false;
-  // A restored history entry can retain the unwrapped DOM. Reload to restore
-  // the original sticker, CSS container and frame elements before replay.
-  window.addEventListener('pageshow', event => {
-    if (event.persisted && started) window.location.reload();
-  });
+  let phase = 'wrapped';
   const delay = ms => new Promise(resolve => setTimeout(resolve,ms));
   const painted = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-  function load(name, durations) {
+  // Keep the actual image elements for reuse throughout this page's lifetime.
+  // Reuse the two initial HTML images instead of requesting duplicate frames.
+  function load(name, durations, firstFrame) {
     return durations.map((_,i) => {
+      if (i === 0) return firstFrame;
       const img = new Image();
       img.className = 'frame';
       img.alt = '';
@@ -343,8 +333,8 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
       return img;
     });
   }
-  const ribbons = load('ribbon', ribbonTimes);
-  const papers = load('paper', paperTimes);
+  const ribbons = load('ribbon', ribbonTimes, ribbon);
+  const papers = load('paper', paperTimes, paper);
   // Preload and decode before playing, so no animation can start early or loop.
   const decode = img => img.decode ? img.decode() : new Promise((resolve,reject) => {
     if (img.complete) return img.naturalWidth ? resolve() : reject(new Error('Image missing'));
@@ -353,53 +343,103 @@ body { background: var(--reveal-bg); color: var(--reveal-ink); }
   const ready = Promise.all([...ribbons,...papers].map(decode)).then(() => true, () => false);
   let prepared = false;
   ready.then(ok => { prepared = ok; });
-  async function playFrames(current, images, durations, speed) {
+  // The current frame is swapped with an already loaded element. The arrays
+  // retain every frame, including frames detached from the document.
+  function showFrame(current, next) {
+    if (current !== next) {
+      const id = current.id;
+      current.removeAttribute('id');
+      next.id = id;
+      current.replaceWith(next);
+    }
+    next.hidden = false;
+    return next;
+  }
+  async function playFrames(layer, images, durations, speed) {
     const rate = Number.isFinite(speed) && speed > 0 ? speed : 1;
     let elapsed = 0;
     let begin;
     for (let i=0; i<images.length; i++) {
-      const next = images[i];
-      // Swap in the preloaded element itself instead of assigning an animated image URL.
-      next.id = current.id;
-      next.hidden = false;
-      current.replaceWith(next);
-      current = next;
-      images[i] = null;
+      if (layer === 'ribbon') ribbon = showFrame(ribbon, images[i]);
+      else paper = showFrame(paper, images[i]);
       if (i===0) { await painted(); begin = performance.now(); }
       elapsed += durations[i] / rate;
-      // Keep every frame visible, even if a slow device needs a little extra time.
+      // Keep every frame visible, even if a slow device needs extra time.
       await delay(Math.max(25, begin + elapsed - performance.now()));
     }
-    return current;
   }
   function finish() {
-    artwork.remove(); tagAnchor.remove(); cornerBrand.remove(); trigger.remove(); status.hidden = true;
-    reveal.inert = false; reveal.removeAttribute('aria-hidden');
+    // Hide, rather than destroy, the gift so replay can reuse it.
+    artwork.hidden = true;
+    tagAnchor.hidden = true;
+    cornerBrand.hidden = true;
+    trigger.hidden = true;
+    status.hidden = true;
+    phase = 'revealed';
+    reveal.inert = false;
+    reveal.removeAttribute('aria-hidden');
     document.querySelector('.play').focus({preventScroll:true});
   }
+  function resetGift(focusTrigger = false) {
+    if (phase !== 'revealed') return;
+    reveal.inert = true;
+    reveal.setAttribute('aria-hidden','true');
+    reveal.scrollTop = 0;
+    // Restore both initial frames while the artwork is still hidden.
+    paper = showFrame(paper, papers[0]);
+    ribbon = showFrame(ribbon, ribbons[0]);
+    tag.classList.remove('leaving');
+    cornerBrand.classList.remove('leaving');
+    tag.hidden = false;
+    tagAnchor.hidden = false;
+    cornerBrand.hidden = false;
+    artwork.hidden = false;
+    trigger.hidden = false;
+    trigger.removeAttribute('aria-disabled');
+    status.hidden = true;
+    phase = 'wrapped';
+    if (focusTrigger) trigger.focus({preventScroll:true});
+  }
+  replay.addEventListener('click', () => resetGift(true));
+  // If the browser restores this page from its back/forward cache, reset in
+  // place rather than forcing another navigation and asset load.
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) resetGift();
+  });
   trigger.addEventListener('click', async () => {
-    if (started) return;
-    started = true; trigger.setAttribute('aria-disabled','true');
+    if (phase !== 'wrapped') return;
+    phase = 'playing';
+    trigger.setAttribute('aria-disabled','true');
     const RIBBON_PLAYBACK_SPEED = readPlaybackSpeed('--ribbon-playback-speed');
     const PAPER_PLAYBACK_SPEED = readPlaybackSpeed('--paper-playback-speed');
-    if (!prepared) { status.textContent = 'Preparing your gift…'; status.hidden = false; }
-    const ok = await ready; status.hidden = true;
+    // Only show the loading message if the first-time wait is noticeable.
+    let loadingTimer;
+    if (!prepared) {
+      loadingTimer = setTimeout(() => {
+        if (!prepared && phase === 'playing') {
+          status.textContent = 'Preparing your gift…';
+          status.hidden = false;
+        }
+      }, 350);
+    }
+    const ok = await ready;
+    clearTimeout(loadingTimer);
+    status.hidden = true;
     if (!ok) {
       status.textContent = 'Some gift images could not load. Please refresh to try again.';
-      status.hidden = false; started = false; trigger.removeAttribute('aria-disabled'); return;
+      status.hidden = false;
+      phase = 'wrapped';
+      trigger.removeAttribute('aria-disabled');
+      return;
     }
+    if (reduceMotion) { finish(); return; }
+    // Fade both elements during the first ribbon frame, without a separate delay.
     tag.classList.add('leaving');
     cornerBrand.classList.add('leaving');
-    if (reduceMotion) {
-      finish(); return;
-    }
-    // Fade the tag and corner message together, then untie. The ribbon and paper never animate simultaneously.
-    await delay(160); tag.hidden = true; cornerBrand.hidden = true;
-    const lastRibbon = await playFrames(ribbon, ribbons, ribbonTimes, RIBBON_PLAYBACK_SPEED);
-    // Paper's first frame was already beneath the ribbon; swap to its sequence now.
-    lastRibbon.hidden = true;
-    await playFrames(paper, papers, paperTimes, PAPER_PLAYBACK_SPEED);
-    // The tenth paper frame is fully clear. Remove the artwork after its hold.
+    await playFrames('ribbon', ribbons, ribbonTimes, RIBBON_PLAYBACK_SPEED);
+    ribbon.hidden = true;
+    await playFrames('paper', papers, paperTimes, PAPER_PLAYBACK_SPEED);
+    // The tenth paper frame is fully clear; hide the artwork after its hold.
     finish();
   });
 })();
