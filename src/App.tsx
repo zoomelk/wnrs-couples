@@ -109,9 +109,9 @@ const buttons = (Object.keys(gameState) as levelKey[]).map((level, index) => (
       textTransform:"uppercase",    */
 width: "100%",
   fontFamily: '"Sacramento", cursive',
-  fontSize: 64,
+  fontSize: "clamp(46px, 8vw, 115px)",
   fontWeight: 400,
-  margin: "0 0 70px",
+  margin: "0 0 30px",
   textTransform: "none",
   letterSpacing: "normal",
       }}>
