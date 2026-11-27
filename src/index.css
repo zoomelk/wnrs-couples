@@ -27,7 +27,7 @@ body {
 /* PROXIMA NOVA — MEDIUM */
 @font-face {
   font-family: "Proxima Nova";
-  src: url("/fonts/ProximaNova-Medium.woff2") format("woff2");
+  src: url("/wnrs-couples/fonts/proxima-nova-medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -36,7 +36,7 @@ body {
 /* PROXIMA NOVA — SEMIBOLD */
 @font-face {
   font-family: "Proxima Nova";
-  src: url("/fonts/ProximaNova-Semibold.woff2") format("woff2");
+  src: url("/wnrs-couples/fonts/proxima-nova-semibold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -45,7 +45,7 @@ body {
 /* PROXIMA NOVA — BOLD */
 @font-face {
   font-family: "Proxima Nova";
-  src: url("/fonts/ProximaNova-Bold.woff2") format("woff2");
+  src: url("/wnrs-couples/fonts/proxima-nova-bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -54,7 +54,7 @@ body {
 /* PROXIMA NOVA — EXTRABOLD */
 @font-face {
   font-family: "Proxima Nova";
-  src: url("/fonts/ProximaNova-Extrabold.woff2") format("woff2");
+  src: url("/wnrs-couples/fonts/proxima-nova-extra-bold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
