@@ -1,457 +1,697 @@
 <!doctype html>
 <!-- Jared Gift — Version 19 | prevent premature reveal while artwork loads -->
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Happy Anniversary Jared ♡</title>
-<meta name="gift-version" content="19">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
-<style>
-@font-face {
-  font-family: "Proxima Nova";
-  src: local("Proxima Nova Extrabold"), local("Proxima Nova Extra Bold"),
-       url("fonts/proxima-nova-extra-bold.woff2") format("woff2");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Happy Anniversary Jared ♡</title>
+  <meta name="gift-version" content="19">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Sacramento&display=swap"
+    rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "Proxima Nova";
+      src: local("Proxima Nova Extrabold"), local("Proxima Nova Extra Bold"),
+        url("fonts/proxima-nova-extra-bold.woff2") format("woff2");
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
 
-:root {
-  /* DESIGN CONTROLS — edit these values to customise the gift. */
-  --accent-red: #c10016; /* rgb(193, 0, 22) */
-  --wrap-loading-bg: #9f181b; /* Sampled from the red wrapping artwork. */
-  --reveal-bg: #ffffff;
-  --reveal-ink: var(--accent-red);
-  --tag-bg: #fffaf2;
-  --tag-ink: var(--accent-red);
-  --corner-brand-color: #fffaf2;
-  --corner-brand-weight: 700;
-  --button-bg: var(--accent-red);
-  --button-ink: #ffffff;
-  --button-hover-bg: #a50013; /* Provisional muted red; replace with the game's primaryAccentMuted value. */
-  --button-hover-ink: rgb(240, 240, 240);
+    :root {
+      /* DESIGN CONTROLS — edit these values to customise the gift. */
+      --accent-red: #c10016;
+      /* rgb(193, 0, 22) */
+      --wrap-loading-bg: #9f181b;
+      /* Sampled from the red wrapping artwork. */
+      --reveal-bg: #ffffff;
+      --reveal-ink: var(--accent-red);
+      --tag-bg: #fffaf2;
+      --tag-ink: var(--accent-red);
+      --corner-brand-color: #fffaf2;
+      --corner-brand-weight: 700;
+      --button-bg: var(--accent-red);
+      --button-ink: #ffffff;
+      --button-hover-bg: #a50013;
+      /* Provisional muted red; replace with the game's primaryAccentMuted value. */
+      --button-hover-ink: rgb(240, 240, 240);
 
-  /* REVEAL PAGE TYPOGRAPHY & SPACING */
-  --reveal-heading-size: clamp(46px, 8vw, 115px);
-  --reveal-message-size: clamp(15px, 1.65vw, 21px);
-  --reveal-message-weight: 500;
-  --reveal-message-width: 680px;
-  --reveal-heading-line-height: 1.1;
-  --reveal-heading-gap: clamp(24px, 5vmin, 50px);
-  --reveal-paragraph-gap: .65em;
-  --reveal-button-gap: var(--reveal-heading-gap);
+      /* REVEAL PAGE TYPOGRAPHY & SPACING */
+      --reveal-heading-size: clamp(46px, 8vw, 115px);
+      --reveal-message-size: clamp(15px, 1.65vw, 21px);
+      --reveal-message-weight: 500;
+      --reveal-message-width: 680px;
+      --reveal-heading-line-height: 1.1;
+      --reveal-heading-gap: clamp(24px, 5vmin, 50px);
+      --reveal-paragraph-gap: .65em;
+      --reveal-button-gap: var(--reveal-heading-gap);
 
-  /* REVEAL BUTTON */
-  --button-radius: 15px;
-  --button-padding: 28px;
-  --button-font-size: 15px;
+      /* REVEAL BUTTON */
+      --button-radius: 15px;
+      --button-padding: 28px;
+      --button-font-size: 15px;
 
-  /* REPLAY LINK */
-  --replay-color: var(--reveal-ink);
-  --replay-font-size: 15px;
-  --replay-icon-size: 1.2em;
-  --replay-gap: 20px;
+      /* REPLAY LINK */
+      --replay-color: var(--reveal-ink);
+      --replay-font-size: 15px;
+      --replay-icon-size: 1.2em;
+      --replay-gap: 20px;
 
-  /* Sticker position: gap from the visible screen edges (after rotation). */
-  --tag-right: 2%;
-  --tag-bottom: 2%;
-  --tag-scale: 29%;   /* Overall size: height, text, and base width. */
-  --tag-width: 90%;  /* Width only, relative to the scaled base width. */
-  --tag-angle: -25deg;
-  --tag-max-size: 373px; /* Maximum unrotated base scale, before width adjustment. */
+      /* Sticker position: gap from the visible screen edges (after rotation). */
+      --tag-right: 2%;
+      --tag-bottom: 2%;
+      --tag-scale: 29%;
+      /* Overall size: height, text, and base width. */
+      --tag-width: 90%;
+      /* Width only, relative to the scaled base width. */
+      --tag-angle: -25deg;
+      --tag-max-size: 373px;
+      /* Maximum unrotated base scale, before width adjustment. */
 
-  /* ANIMATION SPEED — 1 = original, 0.8 = 20% slower, 1.2 = 20% faster. */
-  --ribbon-playback-speed: .7;
-  --paper-playback-speed: .5;
-  --gift-fade-duration: 100ms; /* Fade concurrently with the first ribbon frame. */
+      /* ANIMATION SPEED — 1 = original, 0.8 = 20% slower, 1.2 = 20% faster. */
+      --ribbon-playback-speed: .7;
+      --paper-playback-speed: .5;
+      --gift-fade-duration: 100ms;
+      /* Fade concurrently with the first ribbon frame. */
 
-  /* Portrait sizing only; the same bottom-right anchor applies. */
-  --tag-portrait-scale: min(73vw, 420px);
+      /* Portrait sizing only; the same bottom-right anchor applies. */
+      --tag-portrait-scale: min(73vw, 420px);
 
-  /* Automatic darker edge for the paper gradient. */
-  --tag-shade: color-mix(in srgb, var(--tag-bg), #bda57f 12%);
-}
-* { box-sizing: border-box; }
-/* Base scale determines typography and height; width controls the paper only. */
-.tag-anchor {
-  position: absolute;
-  z-index: 3;
-  right: max(var(--tag-right), env(safe-area-inset-right, 0px));
-  bottom: max(var(--tag-bottom), env(safe-area-inset-bottom, 0px));
-  width: min(var(--tag-scale), var(--tag-max-size));
-  aspect-ratio: 420 / 248;
-  container-type: inline-size;
-  pointer-events: none;
-}
-.gift-tag {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: var(--tag-width);
-  height: 100%;
-  /* Offset the rotated bounding box so the visible corners respect the gaps.
+      /* Automatic darker edge for the paper gradient. */
+      --tag-shade: color-mix(in srgb, var(--tag-bg), #bda57f 12%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Base scale determines typography and height; width controls the paper only. */
+    .tag-anchor {
+      position: absolute;
+      z-index: 3;
+      right: max(var(--tag-right), env(safe-area-inset-right, 0px));
+      bottom: max(var(--tag-bottom), env(safe-area-inset-bottom, 0px));
+      width: min(var(--tag-scale), var(--tag-max-size));
+      aspect-ratio: 420 / 248;
+      container-type: inline-size;
+      pointer-events: none;
+    }
+
+    .gift-tag {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: var(--tag-width);
+      height: 100%;
+      /* Offset the rotated bounding box so the visible corners respect the gaps.
      The intermediate 90-degree rotations exchange width/height contributions. */
-  --abs-sin: max(sin(var(--tag-angle)), calc(-1 * sin(var(--tag-angle))));
-  --abs-cos: max(cos(var(--tag-angle)), calc(-1 * cos(var(--tag-angle))));
-  --tag-edge-transform: translate(calc((1 - var(--abs-cos)) * 50%), calc((1 - var(--abs-cos)) * 50%)) rotate(90deg) translate(calc(-50% * var(--abs-sin)), calc(50% * var(--abs-sin))) rotate(-90deg) rotate(var(--tag-angle));
-  transform: var(--tag-edge-transform);
-  filter: drop-shadow(3px 8px 6px color-mix(in srgb, var(--accent-red) 18%, #00000026));
-  color: var(--tag-ink);
-}
-.tag-paper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 4.047619cqw; /* Match the original 17-unit corner radius. */
-  overflow: hidden;
-}
-.tag-copy {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  scale: 1.05;
-}
-.recipient {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 5cqw;
-  font-weight: 600;
-  letter-spacing: .19em;
-  line-height: 1.2;
-  margin: 0 0 4cqw;
-  padding-left: .19em;
-}
-.rule { display: block; width: 15cqw; height: 1px; background: currentColor; opacity: .8; margin-bottom: 3cqw; }
-.invitation {
-  font-family: 'Sacramento', 'Snell Roundhand', cursive;
-  font-weight: 400;
-  font-size: 13.6cqw;
-  line-height: 1;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.7cqw;
-  margin: 0 0 3.3cqw;
-}
-.heart { width: 7cqw; height: 8cqw; flex: none; transform: rotate(-7deg); margin-top: -1cqw; }
-.instruction {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 3.2cqw;
-  font-weight: 600;
-  letter-spacing: .44em;
-  line-height: 1.3;
-  margin: 1.2em 0 0;
-  padding-left: .14em;
-}
+      --abs-sin: max(sin(var(--tag-angle)), calc(-1 * sin(var(--tag-angle))));
+      --abs-cos: max(cos(var(--tag-angle)), calc(-1 * cos(var(--tag-angle))));
+      --tag-edge-transform: translate(calc((1 - var(--abs-cos)) * 50%), calc((1 - var(--abs-cos)) * 50%)) rotate(90deg) translate(calc(-50% * var(--abs-sin)), calc(50% * var(--abs-sin))) rotate(-90deg) rotate(var(--tag-angle));
+      transform: var(--tag-edge-transform);
+      filter: drop-shadow(3px 8px 6px color-mix(in srgb, var(--accent-red) 18%, #00000026));
+      color: var(--tag-ink);
+    }
 
-/* Cover geometry: all artwork shares one 4:3 coordinate system. */
-html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
-body { background: var(--wrap-loading-bg); color: var(--reveal-ink); }
-#gift { position: relative; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; isolation: isolate; }
-#artwork { position: absolute; z-index: 2; left: 50%; top: 50%; width: max(100vw, 133.333333vh); width: max(100vw, 133.333333dvh); aspect-ratio: 4/3; transform: translate(-50%,-50%); pointer-events: none; }
-.frame { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; user-select: none; }
-#paper { z-index: 1; }
-#ribbon { z-index: 2; }
-/* Fade only on exit, so replay restores both elements instantly. */
-.gift-tag.leaving, .corner-brand.leaving {
-  opacity: 0;
-  transition: opacity var(--gift-fade-duration) linear;
-}
-@media (prefers-reduced-motion: reduce) {
-  .gift-tag.leaving, .corner-brand.leaving { transition: none; }
-}
-/* A LITTLE GIFT FOR YOU — TOP LEFT */
-.corner-brand {
-  position: absolute;
-  z-index: 3;
-  top: clamp(22px, 5vh, 50px);
-  left: clamp(25px, 4vw, 58px);
-  right: auto;
-  text-align: left;
-  font-family: Montserrat, Arial, Helvetica, sans-serif;
-  font-size: clamp(10px, 1.15vw, 13px);
-  font-weight: var(--corner-brand-weight);
-  letter-spacing: .26em;
-  color: var(--corner-brand-color);
-  pointer-events: none;
-}
-/* OUTLINED HEART */
-.corner-heart {
-  width: 1.05em;
-  height: 1.05em;
-  display: inline-block;
-  vertical-align: -.13em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-#unwrap { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-#unwrap:focus-visible { outline: 3px solid white; outline-offset: -7px; }
-#artwork[hidden], .tag-anchor[hidden], #unwrap[hidden], .frame[hidden], .gift-tag[hidden], .corner-brand[hidden], #status[hidden] { display: none; }
-#status { position: absolute; z-index: 5; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: white; background: color-mix(in srgb, var(--accent-red) 75%, transparent); border-radius: 6px; padding: 9px 15px; font: 500 12px/1.4 Montserrat, Arial, sans-serif; text-align: center; pointer-events: none; }
-/* Anniversary landing page — edit freely without affecting the animations. */
-#reveal { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; background: var(--reveal-bg); }
-/* Keep the surprise hidden even before the first image has downloaded. */
-#gift:not(.show-reveal) #reveal { visibility: hidden; }
-.reveal-copy { width: min(90%, 850px); }
-.reveal-copy h1 { font: 400 var(--reveal-heading-size)/var(--reveal-heading-line-height) Sacramento, 'Snell Roundhand', cursive; margin: 0 0 var(--reveal-heading-gap); }
-.reveal-copy h1 span { display: block; }
-.reveal-message { width: min(100%, var(--reveal-message-width)); margin: 0 auto var(--reveal-button-gap); font: var(--reveal-message-weight) var(--reveal-message-size)/1.55 Montserrat, Arial, sans-serif; }
-.reveal-message p { margin: 0; }
-.reveal-message p + p { margin-top: var(--reveal-paragraph-gap); }
-.reveal-heart { display: inline-block; width: .78em; height: .88em; vertical-align: -.13em; transform: rotate(-7deg); }
-/* Keep the reveal usable on short landscape and narrow screens. */
-#reveal { overflow-y: auto; }
-@media (max-height: 500px) { #reveal { place-items: safe center; } .reveal-copy { --reveal-heading-size: clamp(36px, 7vw, 66px); --reveal-heading-gap: 24px; --reveal-button-gap: var(--reveal-heading-gap); } }
-.play { display: inline-block; border-radius: var(--button-radius); padding: var(--button-padding); color: var(--button-ink); background: var(--button-bg); text-decoration: none; font: 800 var(--button-font-size)/1.2 "Proxima Nova", Montserrat, Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
-.play:hover { background: var(--button-hover-bg); color: var(--button-hover-ink); }
-.play:focus-visible { outline: 3px solid var(--button-bg); outline-offset: 5px; }
-/* REPLAY THE GIFT — secondary text control */
-.replay {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .45em;
-  margin: var(--replay-gap) auto 0;
-  padding: 5px 0;
-  border: 0;
-  background: none;
-  color: var(--replay-color);
-  font: 500 var(--replay-font-size)/1.4 Montserrat, Arial, sans-serif;
-  cursor: pointer;
-}
-.replay span { text-decoration: underline; text-underline-offset: .2em; }
-.replay svg { width: var(--replay-icon-size); height: var(--replay-icon-size); flex: none; }
-.replay:hover { color: var(--button-hover-bg); }
-.replay:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-@media (max-aspect-ratio: 1/1) { .tag-anchor { width: min(var(--tag-portrait-scale), var(--tag-max-size)); } }
-</style>
+    .tag-paper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 4.047619cqw;
+      /* Match the original 17-unit corner radius. */
+      overflow: hidden;
+    }
+
+    .tag-copy {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      scale: 1.05;
+    }
+
+    .recipient {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 5cqw;
+      font-weight: 600;
+      letter-spacing: .19em;
+      line-height: 1.2;
+      margin: 0 0 4cqw;
+      padding-left: .19em;
+    }
+
+    .rule {
+      display: block;
+      width: 15cqw;
+      height: 1px;
+      background: currentColor;
+      opacity: .8;
+      margin-bottom: 3cqw;
+    }
+
+    .invitation {
+      font-family: 'Sacramento', 'Snell Roundhand', cursive;
+      font-weight: 400;
+      font-size: 13.6cqw;
+      line-height: 1;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.7cqw;
+      margin: 0 0 3.3cqw;
+    }
+
+    .heart {
+      width: 7cqw;
+      height: 8cqw;
+      flex: none;
+      transform: rotate(-7deg);
+      margin-top: -1cqw;
+    }
+
+    .instruction {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 3.2cqw;
+      font-weight: 600;
+      letter-spacing: .44em;
+      line-height: 1.3;
+      margin: 1.2em 0 0;
+      padding-left: .14em;
+    }
+
+    /* Cover geometry: all artwork shares one 4:3 coordinate system. */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--wrap-loading-bg);
+      color: var(--reveal-ink);
+    }
+
+    #gift {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    #artwork {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+      width: max(100vw, 133.333333vh);
+      width: max(100vw, 133.333333dvh);
+      aspect-ratio: 4/3;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .frame {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      user-select: none;
+    }
+
+    #paper {
+      z-index: 1;
+    }
+
+    #ribbon {
+      z-index: 2;
+    }
+
+    /* Fade only on exit, so replay restores both elements instantly. */
+    .gift-tag.leaving,
+    .corner-brand.leaving {
+      opacity: 0;
+      transition: opacity var(--gift-fade-duration) linear;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .gift-tag.leaving,
+      .corner-brand.leaving {
+        transition: none;
+      }
+    }
+
+    /* A LITTLE GIFT FOR YOU — TOP LEFT */
+    .corner-brand {
+      position: absolute;
+      z-index: 3;
+      top: clamp(22px, 5vh, 50px);
+      left: clamp(25px, 4vw, 58px);
+      right: auto;
+      text-align: left;
+      font-family: Montserrat, Arial, Helvetica, sans-serif;
+      font-size: clamp(10px, 1.15vw, 13px);
+      font-weight: var(--corner-brand-weight);
+      letter-spacing: .26em;
+      color: var(--corner-brand-color);
+      pointer-events: none;
+    }
+
+    /* OUTLINED HEART */
+    .corner-heart {
+      width: 1.05em;
+      height: 1.05em;
+      display: inline-block;
+      vertical-align: -.13em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #unwrap {
+      position: absolute;
+      z-index: 4;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #unwrap:focus-visible {
+      outline: 3px solid white;
+      outline-offset: -7px;
+    }
+
+    #artwork[hidden],
+    .tag-anchor[hidden],
+    #unwrap[hidden],
+    .frame[hidden],
+    .gift-tag[hidden],
+    .corner-brand[hidden],
+    #status[hidden] {
+      display: none;
+    }
+
+    #status {
+      position: absolute;
+      z-index: 5;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      left: 2%;
+      transform: none;
+      color: white;
+      background: color-mix(in srgb, var(--accent-red) 75%, transparent);
+      border-radius: 6px;
+      padding: 9px 15px;
+      font: 500 12px/1.4 Montserrat, Arial, sans-serif;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    /* Anniversary landing page — edit freely without affecting the animations. */
+    #reveal {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      background: var(--reveal-bg);
+    }
+
+    /* Keep the surprise hidden even before the first image has downloaded. */
+    #gift:not(.show-reveal) #reveal {
+      visibility: hidden;
+    }
+
+    .reveal-copy {
+      width: min(90%, 850px);
+    }
+
+    .reveal-copy h1 {
+      font: 400 var(--reveal-heading-size)/var(--reveal-heading-line-height) Sacramento, 'Snell Roundhand', cursive;
+      margin: 0 0 var(--reveal-heading-gap);
+    }
+
+    .reveal-copy h1 span {
+      display: block;
+    }
+
+    .reveal-message {
+      width: min(100%, var(--reveal-message-width));
+      margin: 0 auto var(--reveal-button-gap);
+      font: var(--reveal-message-weight) var(--reveal-message-size)/1.55 Montserrat, Arial, sans-serif;
+    }
+
+    .reveal-message p {
+      margin: 0;
+    }
+
+    .reveal-message p+p {
+      margin-top: var(--reveal-paragraph-gap);
+    }
+
+    .reveal-heart {
+      display: inline-block;
+      width: .78em;
+      height: .88em;
+      vertical-align: -.13em;
+      transform: rotate(-7deg);
+    }
+
+    /* Keep the reveal usable on short landscape and narrow screens. */
+    #reveal {
+      overflow-y: auto;
+    }
+
+    @media (max-height: 500px) {
+      #reveal {
+        place-items: safe center;
+      }
+
+      .reveal-copy {
+        --reveal-heading-size: clamp(36px, 7vw, 66px);
+        --reveal-heading-gap: 24px;
+        --reveal-button-gap: var(--reveal-heading-gap);
+      }
+    }
+
+    .play {
+      display: inline-block;
+      border-radius: var(--button-radius);
+      padding: var(--button-padding);
+      color: var(--button-ink);
+      background: var(--button-bg);
+      text-decoration: none;
+      font: 800 var(--button-font-size)/1.2 "Proxima Nova", Montserrat, Arial, sans-serif;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .play:hover {
+      background: var(--button-hover-bg);
+      color: var(--button-hover-ink);
+    }
+
+    .play:focus-visible {
+      outline: 3px solid var(--button-bg);
+      outline-offset: 5px;
+    }
+
+    /* REPLAY THE GIFT — secondary text control */
+    .replay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45em;
+      margin: var(--replay-gap) auto 0;
+      padding: 5px 0;
+      border: 0;
+      background: none;
+      color: var(--replay-color);
+      font: 500 var(--replay-font-size)/1.4 Montserrat, Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .replay span {
+      text-decoration: underline;
+      text-underline-offset: .2em;
+    }
+
+    .replay svg {
+      width: var(--replay-icon-size);
+      height: var(--replay-icon-size);
+      flex: none;
+    }
+
+    .replay:hover {
+      color: var(--button-hover-bg);
+    }
+
+    .replay:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+    }
+
+    @media (max-aspect-ratio: 1/1) {
+      .tag-anchor {
+        width: min(var(--tag-portrait-scale), var(--tag-max-size));
+      }
+    }
+  </style>
 </head>
+
 <body>
-<main id="gift">
-  <section id="reveal" inert aria-hidden="true">
-    <div class="reveal-copy">
-      <h1>Happy Anniversary<span>Jared <svg class="reveal-heart" viewBox="0 0 32 36" fill="none" aria-hidden="true"><path d="M15.5 31 C12 23 1 13 4.5 7 C8 1 15 6 16 12 C19 4 28 1 29 9 C30.2 17 21 26 15.5 31 Z" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></span></h1>
-      <div class="reveal-message">
-        <p>A year later, and we're not really strangers anymore…</p>
-        <p>But there's always more to learn.</p>
+  <main id="gift">
+    <section id="reveal" inert aria-hidden="true">
+      <div class="reveal-copy">
+        <h1>Happy Anniversary<span>Jared <svg class="reveal-heart" viewBox="0 0 32 36" fill="none" aria-hidden="true">
+              <path d="M15.5 31 C12 23 1 13 4.5 7 C8 1 15 6 16 12 C19 4 28 1 29 9 C30.2 17 21 26 15.5 31 Z"
+                stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></span></h1>
+        <div class="reveal-message">
+          <p>A year later, and we're not really strangers anymore…</p>
+          <p>But there's always more to learn.</p>
+        </div>
+        <a class="play" href="../">Ready for round two?</a>
+        <button class="replay" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M6.2 19 A8.5 8.5 0 1 0 6.2 6 L3.5 9.5" />
+            <path d="M3.5 3 V9.5 H10" />
+          </svg>
+          <span>Replay the gift</span>
+        </button>
       </div>
-      <a class="play" href="../">Ready for round two?</a>
-      <button class="replay" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.2 19 A8.5 8.5 0 1 0 6.2 6 L3.5 9.5"/><path d="M3.5 3 V9.5 H10"/></svg>
-        <span>Replay the gift</span>
-      </button>
+    </section>
+    <div id="artwork" aria-hidden="true">
+      <img class="frame" id="paper" src="assets/paper-01.webp" alt="">
+      <img class="frame" id="ribbon" src="assets/ribbon-01.webp" alt="">
     </div>
-  </section>
-  <div id="artwork" aria-hidden="true">
-    <img class="frame" id="paper" src="assets/paper-01.webp" alt="">
-    <img class="frame" id="ribbon" src="assets/ribbon-01.webp" alt="">
-  </div>
-  <span class="corner-brand" aria-hidden="true">
-    A LITTLE GIFT FOR YOU
-    <svg class="corner-heart" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path d="M12 21 C10 19.1 3 14.5 2.5 9.4 C2.2 6.1 4.2 3.6 7.1 3.6 C9.4 3.6 11 5.1 12 6.6 C13 5.1 14.6 3.6 16.9 3.6 C19.8 3.6 21.8 6.1 21.5 9.4 C21 14.5 14 19.1 12 21 Z"/>
-    </svg>
-  </span>
-  <div class="tag-anchor" aria-hidden="true">
-<div class="gift-tag" aria-hidden="true">
-  <svg class="tag-paper" viewBox="0 0 420 248" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <filter id="grain" x="0" y="0" width="100%" height="100%">
-        <feTurbulence type="fractalNoise" baseFrequency=".78" numOctaves="3" stitchTiles="stitch"/>
-        <feColorMatrix type="saturate" values="0"/>
-      </filter>
-      <linearGradient id="paper-light" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#fffaf2" style="stop-color: var(--tag-bg)"/><stop offset="1" stop-color="#f7efdf" style="stop-color: var(--tag-shade)"/>
-      </linearGradient>
-    </defs>
-    <g>
-      <rect width="420" height="248" fill="url(#paper-light)"/>
-      <rect width="420" height="248" filter="url(#grain)" opacity=".075" style="mix-blend-mode:multiply"/>
-    </g>
-  </svg>
-  <div class="tag-copy">
-    <p class="recipient">FOR JARED</p>
-    <span class="rule" aria-hidden="true"></span>
-    <p class="invitation">Open me <svg class="heart" viewBox="0 0 32 36" fill="none" aria-hidden="true"><path d="M15.5 31 C12 23 1 13 4.5 7 C8 1 15 6 16 12 C19 4 28 1 29 9 C30.2 17 21 26 15.5 31 Z" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
-    <p class="instruction">TAP TO UNWRAP</p>
-  </div>
-</div>
-  </div>
-  <button id="unwrap" type="button" aria-label="Open your gift, Jared. Tap to unwrap."></button>
-  <div id="status" role="status" hidden></div>
-</main>
+    <span class="corner-brand" aria-hidden="true">
+      A LITTLE GIFT FOR YOU
+      <svg class="corner-heart" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+        <path
+          d="M12 21 C10 19.1 3 14.5 2.5 9.4 C2.2 6.1 4.2 3.6 7.1 3.6 C9.4 3.6 11 5.1 12 6.6 C13 5.1 14.6 3.6 16.9 3.6 C19.8 3.6 21.8 6.1 21.5 9.4 C21 14.5 14 19.1 12 21 Z" />
+      </svg>
+    </span>
+    <div class="tag-anchor" aria-hidden="true">
+      <div class="gift-tag" aria-hidden="true">
+        <svg class="tag-paper" viewBox="0 0 420 248" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <defs>
+            <filter id="grain" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency=".78" numOctaves="3" stitchTiles="stitch" />
+              <feColorMatrix type="saturate" values="0" />
+            </filter>
+            <linearGradient id="paper-light" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fffaf2" style="stop-color: var(--tag-bg)" />
+              <stop offset="1" stop-color="#f7efdf" style="stop-color: var(--tag-shade)" />
+            </linearGradient>
+          </defs>
+          <g>
+            <rect width="420" height="248" fill="url(#paper-light)" />
+            <rect width="420" height="248" filter="url(#grain)" opacity=".075" style="mix-blend-mode:multiply" />
+          </g>
+        </svg>
+        <div class="tag-copy">
+          <p class="recipient">FOR JARED</p>
+          <span class="rule" aria-hidden="true"></span>
+          <p class="invitation">Open me <svg class="heart" viewBox="0 0 32 36" fill="none" aria-hidden="true">
+              <path d="M15.5 31 C12 23 1 13 4.5 7 C8 1 15 6 16 12 C19 4 28 1 29 9 C30.2 17 21 26 15.5 31 Z"
+                stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></p>
+          <p class="instruction">TAP TO UNWRAP</p>
+        </div>
+      </div>
+    </div>
+    <button id="unwrap" type="button" aria-label="Open your gift, Jared. Tap to unwrap."></button>
+    <div id="status" role="status" hidden></div>
+  </main>
 
-<script>
-(() => {
-  // ANIMATION SPEED CONTROLS — edit these independently.
-  // 1 = original speed; 0.8 = 20% slower; 1.2 = 20% faster.
-  // Use positive numbers. Every frame duration is divided by its speed.
-  const readPlaybackSpeed = name => {
-    const value = Number(getComputedStyle(document.documentElement).getPropertyValue(name).trim());
-    return Number.isFinite(value) && value > 0 ? value : 1;
-  };
+  <script>
+    (() => {
+      // ANIMATION SPEED CONTROLS — edit these independently.
+      // 1 = original speed; 0.8 = 20% slower; 1.2 = 20% faster.
+      // Use positive numbers. Every frame duration is divided by its speed.
+      const readPlaybackSpeed = name => {
+        const value = Number(getComputedStyle(document.documentElement).getPropertyValue(name).trim());
+        return Number.isFinite(value) && value > 0 ? value : 1;
+      };
 
-  // Frames extracted from the supplied animated WebPs, retaining their original timings.
-  // Skip ribbon frame 13 (plain red): paper frame 1 already supplies that visual.
-  const ribbonTimes = [100,100,100,100,100,100,70,70,70,70,70,70];
-  // Nine original paper frames, plus one fully transparent final frame.
-  const paperTimes = Array(10).fill(100);
-  const clearPaperFrame = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
-  const path = (name, i) => `assets/${name}-${String(i+1).padStart(2,'0')}.webp`;
-  const gift = document.querySelector('#gift');
-  const artwork = document.querySelector('#artwork');
-  let ribbon = document.querySelector('#ribbon');
-  let paper = document.querySelector('#paper');
-  const tag = document.querySelector('.gift-tag');
-  const cornerBrand = document.querySelector('.corner-brand');
-  const tagAnchor = document.querySelector('.tag-anchor');
-  const trigger = document.querySelector('#unwrap');
-  const reveal = document.querySelector('#reveal');
-  const status = document.querySelector('#status');
-  const replay = document.querySelector('.replay');
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let phase = 'wrapped';
-  const delay = ms => new Promise(resolve => setTimeout(resolve,ms));
-  const painted = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-  // Keep the actual image elements for reuse throughout this page's lifetime.
-  // Reuse the two initial HTML images instead of requesting duplicate frames.
-  function load(name, durations, firstFrame) {
-    return durations.map((_,i) => {
-      if (i === 0) return firstFrame;
-      const img = new Image();
-      img.className = 'frame';
-      img.alt = '';
-      img.src = name === 'paper' && i === 9 ? clearPaperFrame : path(name,i);
-      return img;
-    });
-  }
-  const ribbons = load('ribbon', ribbonTimes, ribbon);
-  const papers = load('paper', paperTimes, paper);
-  // Preload and decode before playing, so no animation can start early or loop.
-  const decode = img => img.decode ? img.decode() : new Promise((resolve,reject) => {
-    if (img.complete) return img.naturalWidth ? resolve() : reject(new Error('Image missing'));
-    img.addEventListener('load',resolve,{once:true}); img.addEventListener('error',reject,{once:true});
-  });
-  const ready = Promise.all([...ribbons,...papers].map(decode)).then(() => true, () => false);
-  let prepared = false;
-  ready.then(ok => { prepared = ok; });
-  // The current frame is swapped with an already loaded element. The arrays
-  // retain every frame, including frames detached from the document.
-  function showFrame(current, next) {
-    if (current !== next) {
-      const id = current.id;
-      current.removeAttribute('id');
-      next.id = id;
-      current.replaceWith(next);
-    }
-    next.hidden = false;
-    return next;
-  }
-  async function playFrames(layer, images, durations, speed) {
-    const rate = Number.isFinite(speed) && speed > 0 ? speed : 1;
-    let elapsed = 0;
-    let begin;
-    for (let i=0; i<images.length; i++) {
-      if (layer === 'ribbon') ribbon = showFrame(ribbon, images[i]);
-      else paper = showFrame(paper, images[i]);
-      if (i===0) { await painted(); begin = performance.now(); }
-      elapsed += durations[i] / rate;
-      // Keep every frame visible, even if a slow device needs extra time.
-      await delay(Math.max(25, begin + elapsed - performance.now()));
-    }
-  }
-  function finish() {
-    gift.classList.add('show-reveal');
-    // Hide, rather than destroy, the gift so replay can reuse it.
-    artwork.hidden = true;
-    tagAnchor.hidden = true;
-    cornerBrand.hidden = true;
-    trigger.hidden = true;
-    status.hidden = true;
-    phase = 'revealed';
-    reveal.inert = false;
-    reveal.removeAttribute('aria-hidden');
-    document.querySelector('.play').focus({preventScroll:true});
-  }
-  function resetGift(focusTrigger = false) {
-    if (phase !== 'revealed') return;
-    gift.classList.remove('show-reveal');
-    reveal.inert = true;
-    reveal.setAttribute('aria-hidden','true');
-    reveal.scrollTop = 0;
-    // Restore both initial frames while the artwork is still hidden.
-    paper = showFrame(paper, papers[0]);
-    ribbon = showFrame(ribbon, ribbons[0]);
-    tag.classList.remove('leaving');
-    cornerBrand.classList.remove('leaving');
-    tag.hidden = false;
-    tagAnchor.hidden = false;
-    cornerBrand.hidden = false;
-    artwork.hidden = false;
-    trigger.hidden = false;
-    trigger.removeAttribute('aria-disabled');
-    status.hidden = true;
-    phase = 'wrapped';
-    if (focusTrigger) trigger.focus({preventScroll:true});
-  }
-  replay.addEventListener('click', () => resetGift(true));
-  // If the browser restores this page from its back/forward cache, reset in
-  // place rather than forcing another navigation and asset load.
-  window.addEventListener('pageshow', event => {
-    if (event.persisted) resetGift();
-  });
-  trigger.addEventListener('click', async () => {
-    if (phase !== 'wrapped') return;
-    phase = 'playing';
-    trigger.setAttribute('aria-disabled','true');
-    const RIBBON_PLAYBACK_SPEED = readPlaybackSpeed('--ribbon-playback-speed');
-    const PAPER_PLAYBACK_SPEED = readPlaybackSpeed('--paper-playback-speed');
-    // Only show the loading message if the first-time wait is noticeable.
-    let loadingTimer;
-    if (!prepared) {
-      loadingTimer = setTimeout(() => {
-        if (!prepared && phase === 'playing') {
-          status.textContent = 'Preparing your gift…';
-          status.hidden = false;
+      // Frames extracted from the supplied animated WebPs, retaining their original timings.
+      // Skip ribbon frame 13 (plain red): paper frame 1 already supplies that visual.
+      const ribbonTimes = [100, 100, 100, 100, 100, 100, 70, 70, 70, 70, 70, 70];
+      // Nine original paper frames, plus one fully transparent final frame.
+      const paperTimes = Array(10).fill(100);
+      const clearPaperFrame = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
+      const path = (name, i) => `assets/${name}-${String(i + 1).padStart(2, '0')}.webp`;
+      const gift = document.querySelector('#gift');
+      const artwork = document.querySelector('#artwork');
+      let ribbon = document.querySelector('#ribbon');
+      let paper = document.querySelector('#paper');
+      const tag = document.querySelector('.gift-tag');
+      const cornerBrand = document.querySelector('.corner-brand');
+      const tagAnchor = document.querySelector('.tag-anchor');
+      const trigger = document.querySelector('#unwrap');
+      const reveal = document.querySelector('#reveal');
+      const status = document.querySelector('#status');
+      const replay = document.querySelector('.replay');
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let phase = 'wrapped';
+      const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+      const painted = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      // Keep the actual image elements for reuse throughout this page's lifetime.
+      // Reuse the two initial HTML images instead of requesting duplicate frames.
+      function load(name, durations, firstFrame) {
+        return durations.map((_, i) => {
+          if (i === 0) return firstFrame;
+          const img = new Image();
+          img.className = 'frame';
+          img.alt = '';
+          img.src = name === 'paper' && i === 9 ? clearPaperFrame : path(name, i);
+          return img;
+        });
+      }
+      const ribbons = load('ribbon', ribbonTimes, ribbon);
+      const papers = load('paper', paperTimes, paper);
+      // Preload and decode before playing, so no animation can start early or loop.
+      const decode = img => img.decode ? img.decode() : new Promise((resolve, reject) => {
+        if (img.complete) return img.naturalWidth ? resolve() : reject(new Error('Image missing'));
+        img.addEventListener('load', resolve, { once: true }); img.addEventListener('error', reject, { once: true });
+      });
+      const ready = Promise.all([...ribbons, ...papers].map(decode)).then(() => true, () => false);
+      let prepared = false;
+      ready.then(ok => { prepared = ok; });
+      // The current frame is swapped with an already loaded element. The arrays
+      // retain every frame, including frames detached from the document.
+      function showFrame(current, next) {
+        if (current !== next) {
+          const id = current.id;
+          current.removeAttribute('id');
+          next.id = id;
+          current.replaceWith(next);
         }
-      }, 350);
-    }
-    const ok = await ready;
-    clearTimeout(loadingTimer);
-    status.hidden = true;
-    if (!ok) {
-      status.textContent = 'Some gift images could not load. Please refresh to try again.';
-      status.hidden = false;
-      phase = 'wrapped';
-      trigger.removeAttribute('aria-disabled');
-      return;
-    }
-    if (reduceMotion) { finish(); return; }
-    // Fade both elements during the first ribbon frame, without a separate delay.
-    tag.classList.add('leaving');
-    cornerBrand.classList.add('leaving');
-    await playFrames('ribbon', ribbons, ribbonTimes, RIBBON_PLAYBACK_SPEED);
-    // Only expose the message when the transparent paper sequence starts.
-    gift.classList.add('show-reveal');
-    ribbon.hidden = true;
-    await playFrames('paper', papers, paperTimes, PAPER_PLAYBACK_SPEED);
-    // The tenth paper frame is fully clear; hide the artwork after its hold.
-    finish();
-  });
-})();
-</script>
+        next.hidden = false;
+        return next;
+      }
+      async function playFrames(layer, images, durations, speed) {
+        const rate = Number.isFinite(speed) && speed > 0 ? speed : 1;
+        let elapsed = 0;
+        let begin;
+        for (let i = 0; i < images.length; i++) {
+          if (layer === 'ribbon') ribbon = showFrame(ribbon, images[i]);
+          else paper = showFrame(paper, images[i]);
+          if (i === 0) { await painted(); begin = performance.now(); }
+          elapsed += durations[i] / rate;
+          // Keep every frame visible, even if a slow device needs extra time.
+          await delay(Math.max(25, begin + elapsed - performance.now()));
+        }
+      }
+      function finish() {
+        gift.classList.add('show-reveal');
+        // Hide, rather than destroy, the gift so replay can reuse it.
+        artwork.hidden = true;
+        tagAnchor.hidden = true;
+        cornerBrand.hidden = true;
+        trigger.hidden = true;
+        status.hidden = true;
+        phase = 'revealed';
+        reveal.inert = false;
+        reveal.removeAttribute('aria-hidden');
+        document.querySelector('.play').focus({ preventScroll: true });
+      }
+      function resetGift(focusTrigger = false) {
+        if (phase !== 'revealed') return;
+        gift.classList.remove('show-reveal');
+        reveal.inert = true;
+        reveal.setAttribute('aria-hidden', 'true');
+        reveal.scrollTop = 0;
+        // Restore both initial frames while the artwork is still hidden.
+        paper = showFrame(paper, papers[0]);
+        ribbon = showFrame(ribbon, ribbons[0]);
+        tag.classList.remove('leaving');
+        cornerBrand.classList.remove('leaving');
+        tag.hidden = false;
+        tagAnchor.hidden = false;
+        cornerBrand.hidden = false;
+        artwork.hidden = false;
+        trigger.hidden = false;
+        trigger.removeAttribute('aria-disabled');
+        status.hidden = true;
+        phase = 'wrapped';
+        if (focusTrigger) trigger.focus({ preventScroll: true });
+      }
+      replay.addEventListener('click', () => resetGift(true));
+      // If the browser restores this page from its back/forward cache, reset in
+      // place rather than forcing another navigation and asset load.
+      window.addEventListener('pageshow', event => {
+        if (event.persisted) resetGift();
+      });
+      trigger.addEventListener('click', async () => {
+        if (phase !== 'wrapped') return;
+        phase = 'playing';
+        trigger.setAttribute('aria-disabled', 'true');
+        const RIBBON_PLAYBACK_SPEED = readPlaybackSpeed('--ribbon-playback-speed');
+        const PAPER_PLAYBACK_SPEED = readPlaybackSpeed('--paper-playback-speed');
+        // Only show the loading message if the first-time wait is noticeable.
+        let loadingTimer;
+        if (!prepared) {
+          loadingTimer = setTimeout(() => {
+            if (!prepared && phase === 'playing') {
+              status.textContent = 'Preparing your gift…';
+              status.hidden = false;
+            }
+          }, 350);
+        }
+        const ok = await ready;
+        clearTimeout(loadingTimer);
+        status.hidden = true;
+        if (!ok) {
+          status.textContent = 'Some gift images could not load. Please refresh to try again.';
+          status.hidden = false;
+          phase = 'wrapped';
+          trigger.removeAttribute('aria-disabled');
+          return;
+        }
+        if (reduceMotion) { finish(); return; }
+        // Fade both elements during the first ribbon frame, without a separate delay.
+        tag.classList.add('leaving');
+        cornerBrand.classList.add('leaving');
+        await playFrames('ribbon', ribbons, ribbonTimes, RIBBON_PLAYBACK_SPEED);
+        // Only expose the message when the transparent paper sequence starts.
+        gift.classList.add('show-reveal');
+        ribbon.hidden = true;
+        await playFrames('paper', papers, paperTimes, PAPER_PLAYBACK_SPEED);
+        // The tenth paper frame is fully clear; hide the artwork after its hold.
+        finish();
+      });
+    })();
+  </script>
 
 </body>
+
 </html>
