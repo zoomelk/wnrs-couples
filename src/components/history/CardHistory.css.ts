@@ -6,7 +6,7 @@ export const historyStyles = style({
   display: "flex",
   flexDirection: "column",
   width: "100%",
-  maxWidth: "17rem",
+  maxWidth: "19rem",
   alignContent: "center",
   alignItems: "center",
   padding: 5,
@@ -15,8 +15,9 @@ export const historyStyles = style({
 export const historyTitleStyles = style({
   textTransform: "uppercase",
   color: primaryAccent,
-  fontSize: 18,
-  fontWeight: 800,
+  fontSize: 20,
+  fontWeight: "inherit",
+  marginBottom:3,
 });
 
 export const cardContainerStyles = style({
@@ -35,9 +36,12 @@ export const cardContainerStyles = style({
 });
 
 export const cardContainerScrollStyles = style({
-  width: "96%",
-  height: "96%",
-  overflowY: "scroll",
+width: "98%",
+height: "auto",
+flex: 1,
+minHeight: 0,
+margin: "4px auto",
+  overflowY: "auto",
   overflowX: "hidden",
-  margin: "auto",
+  padding: 12,
 });

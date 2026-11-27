@@ -89,9 +89,34 @@ function App() {
   return (
     <div className={appStyles}>
       <Credits />
+      
+      <h1 className={titleStyles} style={{
+      width: "100%",
+      fontFamily: "Montserrat",
+      fontSize: 48,
+      fontWeight: 800,
+      margin: "0 0 70px",
+      textTransform:"uppercase",    
+      }}>
+      Happy Anniversary Jared 
+    </h1>
+
       <div className={levelsStyles}>{buttons}</div>
       <div className={questionStyles}>
-        <div className={titleStyles}>wnrs</div>
+        <div className={titleStyles}style={{
+                fontFamily: "Montserrat",
+marginBottom: 5,
+        }}>♥️ wnrs ♥️</div>
+      <h3 className={titleStyles} style={{
+              fontFamily: "Montserrat",
+      width: "100%",
+      fontSize: 23,
+      fontWeight: 800,
+      margin: "0 0 10px",
+    }}>
+      Couples Edition
+    </h3>
+
         <Card styleName={bigCardStyles} question={currCard} />
         <button className={nextCardButtonStlyes} onClick={() => handleNextCard()}>
           next card

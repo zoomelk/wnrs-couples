@@ -11,6 +11,7 @@ export const appStyles = style({
   fontWeight: 800,
   flexWrap: "wrap",
   justifyContent: "space-evenly",
+columnGap: 50,
   maxWidth: 1080,
   margin: "0 auto",
   height: "100%",
@@ -42,7 +43,7 @@ export const levelsStyles = style({
   justifyContent: "center",
   alignContent: "center",
   alignItems: "center",
-  width: "17rem",
+  width: "15rem",
 
   "@media": {
     "screen and (max-width: 600px)": {
@@ -66,7 +67,6 @@ export const levelButtonStyles = style({
   textTransform: "uppercase",
   color: primaryAccent,
   fontSize: 18,
-  fontWeight: 800,
   fontFamily: "inherit",
   cursor: "pointer",
 
@@ -111,8 +111,6 @@ export const nextCardButtonStlyes = style({
   color: "#fff",
   outline: "none",
   fontSize: 18,
-  fontWeight: 800,
-  fontFamily: '"Biryani", sans-serif',
   border: "none",
 
   ":hover": {

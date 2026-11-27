@@ -12,11 +12,19 @@ globalStyle("html, body, #root", {
 });
 
 globalStyle("body", {
-  fontFamily: '"Biryani", sans-serif',
+  fontFamily: '"Proxima Nova", sans-serif',
+  fontWeight: 800,
+  letterSpacing: "0.5px",
   vars: {
     [primaryAccent]: "#c10016",
     [primaryAccentMuted]: "#ad0014",
   },
+});
+
+globalStyle("button", {
+  fontFamily: "inherit",
+  fontWeight: "inherit",
+  letterSpacing: "inherit",
 });
 
 globalStyle("a, a:visited, a:hover", {

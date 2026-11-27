@@ -8,6 +8,8 @@ export const cardStyles = style({
   flexDirection: "column",
   justifyContent: "center",
   textTransform: "uppercase",
+  fontWeight: 700,
+    letterSpacing: "0.01rem",
   transition: "transform 0.1s ease-in-out",
   ":hover": {
     transform: "scale(1.02)",
@@ -45,7 +47,7 @@ export const bigCardStyles = style({
   },
 });
 
-export const smallCardStyles = style({
+/*export const smallCardStyles = style({
   // margin: "auto",
   fontSize: 18,
   width: "100%",
@@ -64,4 +66,30 @@ export const smallCardStyles = style({
   0px 30px 90px rgba(0, 0, 0, 0.07)
   `,
   padding: 20,
+});*/
+
+
+export const smallCardStyles = style({
+  fontSize: 16,
+  width: "100%",
+  height: "auto",
+  aspectRatio: "416 / 300",
+  margin: "0 0 12px",
+  borderRadius: 28,
+  backgroundColor: "#ffffff",
+  color: "#c10016",
+  border: "none",
+    boxShadow: `
+  0px 0.7px 2.1px rgba(0, 0, 0, 0.018),
+  0px 1.6px 4.8px rgba(0, 0, 0, 0.026),
+  0px 2.9px 8.7px rgba(0, 0, 0, 0.032),
+  0px 4.8px 14.5px rgba(0, 0, 0, 0.038),
+  0px 7.9px 23.8px rgba(0, 0, 0, 0.044),
+  0px 30px 90px rgba(0, 0, 0, 0.07)
+  `,
+  padding: "9%",
+  minHeight: 0,
+  overflowY: "auto",
+  overflowWrap: "anywhere",
+  justifyContent: "safe center",
 });
